@@ -9,7 +9,7 @@ const CatalogForm = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
-  // const [ tags, setSelectedTags] = useState([]);
+  const [ selectedTags, setSelectedTags] = useState([]);
 
   const handleImageUpload = (e) => {
     const archivo = e.target.files[0];
@@ -37,10 +37,23 @@ const CatalogForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newArticle = { description, price, image}
+    const newArticle = {
+      description,
+      price,
+      image,
+      tags: selectedTags,
+    }
     await saveArticle(newArticle);
     setSuccessMessage('✅ Artículo guardado correctamente');
     setTimeout(() => setSuccessMessage(''), 3000);
+  }
+  const handleTagChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedTags([...selectedTags, value]);
+    } else {
+      setSelectedTags(selectedTags.filter(tag => tag !== value))
+    }
   }
 
 
@@ -64,6 +77,16 @@ const CatalogForm = () => {
       onChange={(e) => setPrice(e.target.value)}
       />
       <span>Euros</span>
+      <div>
+        <label>Etiquetas</label>
+        <div>
+          <label><input type="checkbox" value="Fiestas" onChange={handleTagChange}/>Fiestas</label>
+          <label><input type="checkbox" value="Deporte" onChange={handleTagChange}/>Deporte</label>
+          <label><input type="checkbox" value="Nombres" onChange={handleTagChange}/>Nombres</label>
+          <label><input type="checkbox" value="Puzzles" onChange={handleTagChange}/>Puzzles</label>
+          <label><input type="checkbox" value="Figuras" onChange={handleTagChange}/>Figuras</label>
+        </div>
+      </div>
       <button type='submit'>Guardar Articulo</button>
     </form>
     {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}

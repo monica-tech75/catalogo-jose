@@ -17,7 +17,7 @@ const Navbar = () => {
             <Link to="/">Eliminar Catalogo</Link>
            </li>
            <li>
-            <Link to="/">Exportar Catalogo</Link>
+            <Link to="/">Modificar Catalogo</Link>
            </li>
         </ul>
     </nav>

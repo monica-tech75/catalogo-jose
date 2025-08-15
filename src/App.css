@@ -2,6 +2,7 @@
   width: 100vw;
   margin: 0 auto;
   padding: 20px;
+  color: bisque;
 }
 
 img {
@@ -37,48 +38,4 @@ header {
   color: #1b1b1b;
   padding: 10px 20px;
   border-radius: 5px;
-}
-
-/*  Tarjeta de Articulo   */
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 10px;
-}
-
-/* Tarjetas */
-.card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.car:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-/* Image del Articulo */
-.card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin: 5px 0;
-}
-
-.card h3 {
-  color: #4A90E2;
-  font-size: 1.1rem;
-  margin-top: 10px;
 }
