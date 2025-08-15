@@ -11,6 +11,7 @@ const CatalogForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [ selectedTags, setSelectedTags] = useState([]);
 
+
   const handleImageUpload = (e) => {
     const archivo = e.target.files[0];
     if (archivo) {
@@ -55,6 +56,8 @@ const CatalogForm = () => {
       setSelectedTags(selectedTags.filter(tag => tag !== value))
     }
   }
+
+
 
 
   return (

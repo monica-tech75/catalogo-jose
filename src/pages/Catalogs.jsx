@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 import { getAllArticles } from '../services/dbService';
 import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
+import EditArticle from '../componentes/EditArticle';
 
 const Catalogs = () => {
     const [articles, setArticles] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('Todos');
+
+    const [editingArticle, setEditingArticle] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
 
     const categories = [ 'Todos', 'Fiestas', 'Deporte', 'Nombres', 'Puzzles', 'Figuras'];
 
@@ -21,9 +25,17 @@ const Catalogs = () => {
     ? articles
     : articles.filter(item => Array.isArray(item.tags) && item.tags.includes(selectedCategory));
 
+    const handleSave = async () => {
+      const updatedItems = await getAllArticles();
+      setArticles(updatedItems);
+      setEditingArticle(null);
+      setIsEditing(false);
+    };
+
     console.log(articles);
 
   return (
+    <>
     <div className='catalogs-container'>
         <h3><Link to="/">Back Home</Link></h3>
         <h2>Catalogs</h2>
@@ -48,10 +60,22 @@ const Catalogs = () => {
           <img src={item.image} alt="Artículo" style={{ width: '150px' }} />
           <p>{item.description}</p>
           <h3>{item.price} €</h3>
+          <button onClick={() => {
+            setEditingArticle(item)
+            setIsEditing(true)
+          }} >Editar</button>
         </div>
       ))}
     </div>
     </div>
+    {isEditing && editingArticle && (
+      <EditArticle
+      article={editingArticle}
+      onSave={handleSave}
+      />
+    )}
+    </>
+
   )
 }
 
