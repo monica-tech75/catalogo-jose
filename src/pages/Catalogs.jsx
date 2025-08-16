@@ -57,7 +57,14 @@ const Catalogs = () => {
         <div className="gallery">
       {filteredArticles.map((item) => (
         <div key={item.id} className="card">
-          <img src={item.image} alt="Artículo" style={{ width: '150px' }} />
+         {item.imageBlob && (
+  <img
+    src={URL.createObjectURL(item.imageBlob)}
+    alt="Artículo"
+    style={{ width: '150px' }}
+  />
+)}
+
           <p>{item.description}</p>
           <h3>{item.price} €</h3>
           <button onClick={() => {
