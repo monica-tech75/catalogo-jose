@@ -11,7 +11,7 @@ const Navbar = () => {
             <Link to="/catalogs">Catalogos</Link>
            </li>
            <li>
-            <Link to="/create">Crear Catalogo</Link>
+            <Link to="/create">Añadir Articulo</Link>
            </li>
            <li>
             <Link to="/">Eliminar Catalogo</Link>
