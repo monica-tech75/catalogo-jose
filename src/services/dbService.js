@@ -3,7 +3,7 @@ import { openDB } from "idb";
 // Crear y Guardar articulos en la database
 
 export const getDB = async () => {
-    return await openDB('CatalogDB', 2, {
+    return await openDB('CatalogDB', 3, {
         upgrade(db) {
             if (!db.objectStoreNames.contains('articles')) {
                 db.createObjectStore('articles', { keyPath: 'id', autoIncrement: true });
