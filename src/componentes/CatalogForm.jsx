@@ -17,6 +17,8 @@ const CatalogForm = () => {
     const archivo = e.target.files[0];
     if (archivo) {
       const imageUrl = URL.createObjectURL(archivo);
+      console.log('📸 Imagen subida:', archivo);
+      console.log('🔗 URL de vista previa:', imageUrl);
       setImagePreview(imageUrl);
       setImageBlob(archivo); // guardamos el archivo como Blob
     }
@@ -35,6 +37,12 @@ const CatalogForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('📝 Guardando artículo:', {
+      description,
+      price,
+      imageBlob,
+      tags: selectedTags,
+    });
     const newArticle = {
       description,
       price,

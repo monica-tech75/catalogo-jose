@@ -55,25 +55,41 @@ const Catalogs = () => {
           </select>
         </div>
         <div className="gallery">
-      {filteredArticles.map((item) => (
-        <div key={item.id} className="card">
-         {item.imageBlob && (
-  <img
-    src={URL.createObjectURL(item.imageBlob)}
-    alt="Artículo"
-    style={{ width: '150px' }}
-  />
-)}
-
-          <p>{item.description}</p>
+  {filteredArticles.map((item) => {
+    if (item.imageBlob) {
+      try {
+        const imageUrl = URL.createObjectURL(item.imageBlob);
+        console.log('✅ Imagen encontrada:', item.description, imageUrl);
+        return (
+          <div key={item.id} className="card">
+            <img
+              src={imageUrl}
+              alt="Artículo"
+              style={{ width: '150px' }}
+            />
+            <p>{item.description}</p>
           <h3>{item.price} €</h3>
           <button onClick={() => {
             setEditingArticle(item)
             setIsEditing(true)
           }} >Editar</button>
+          </div>
+        );
+      } catch (error) {
+        console.error('❌ Error al crear URL de imagen:', error);
+      }
+    } else {
+      console.warn('⚠️ Artículo sin imagen:', item.description);
+      return (
+        <div key={item.id} className="card">
+          <p>Sin imagen disponible</p>
         </div>
-      ))}
-    </div>
+      );
+    }
+  })}
+</div>
+
+
     </div>
     {isEditing && editingArticle && (
       <EditArticle
