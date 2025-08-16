@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllArticles } from '../services/dbService';
+import { deleteArticleById } from '../services/dbService';
 import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
 import EditArticle from '../componentes/EditArticle';
@@ -32,6 +33,15 @@ const Catalogs = () => {
       setArticles(updatedItems);
       setEditingArticle(null);
       setIsEditing(false);
+    };
+
+    const handleDelete = async (item) => {
+      const result = await deleteArticleById(item.id);
+      alert(result.message);
+
+      if (result.success) {
+        setArticles(prev => prev.filter(article => article.id !== item.id));
+      }
     };
 
     console.log(articles);
@@ -71,11 +81,9 @@ const Catalogs = () => {
             />
             <p>{item.description}</p>
           <h3>{item.price} €</h3>
-        {/*   <button onClick={() => {
-            setEditingArticle(item)
-            setIsEditing(true)
-          }} >Editar</button> */}
+
           <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
+          <button onClick={() => handleDelete(item)}>Eliminar</button>
           </div>
         );
       } catch (error) {
