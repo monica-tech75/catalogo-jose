@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import CatalogForm from "./componentes/CatalogForm";
 import Home from "./pages/Home";
 import Catalogs from "./pages/Catalogs";
+import EditArticlesPage from './pages/EditArticlesPage'
 
 export const router = createBrowserRouter([
     {
@@ -18,8 +19,8 @@ export const router = createBrowserRouter([
         element: <CatalogForm />
     },
     {
-         path: '/delete',
-        element: 'DeleteCatalog'
+         path: '/editar/:id',
+        element: <EditArticlesPage />
     },
     {
         path: '/export',

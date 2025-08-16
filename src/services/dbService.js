@@ -43,3 +43,14 @@ export const updateArticle = async (id, updatedData) => {
     }
     await tx.done;
 }
+
+// Obtener articulo por id
+
+export const getArticleById = async (id) => {
+    const db = await getDB();
+    const tx = db.transaction('articles', 'readonly');
+    const store = tx.objectStore('articles');
+    const article = await store.get(id);
+    await tx.done;
+    return article;
+}

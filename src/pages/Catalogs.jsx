@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAllArticles } from '../services/dbService';
 import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
 import EditArticle from '../componentes/EditArticle';
 
 const Catalogs = () => {
+    const navigate = useNavigate();
     const [articles, setArticles] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('Todos');
 
@@ -37,7 +39,7 @@ const Catalogs = () => {
   return (
     <>
     <div className='catalogs-container'>
-        <h3><Link to="/">Back Home</Link></h3>
+        <h3><Link to="/">Inicio</Link></h3>
         <h2>Catalogs</h2>
         {/* Dropdown de categorias */}
         <div className="dropdown-container">
@@ -69,10 +71,11 @@ const Catalogs = () => {
             />
             <p>{item.description}</p>
           <h3>{item.price} €</h3>
-          <button onClick={() => {
+        {/*   <button onClick={() => {
             setEditingArticle(item)
             setIsEditing(true)
-          }} >Editar</button>
+          }} >Editar</button> */}
+          <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
           </div>
         );
       } catch (error) {
