@@ -6,7 +6,8 @@ import { saveArticle } from '../services/dbService';
 const CatalogForm = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState(null);
+  const [imageBlob, setImageBlob] = useState(null); // en lugar de image
+
   const [imagePreview, setImagePreview] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [ selectedTags, setSelectedTags] = useState([]);
@@ -15,19 +16,15 @@ const CatalogForm = () => {
   const handleImageUpload = (e) => {
     const archivo = e.target.files[0];
     if (archivo) {
-      // Vista previa
       const imageUrl = URL.createObjectURL(archivo);
       setImagePreview(imageUrl);
-
-      // Base64
-      const lector = new FileReader();
-      lector.onloadend = () => {
-        setImage(lector.result);
-        console.log(lector.result);
-      };
-      lector.readAsDataURL(archivo);
+      setImageBlob(archivo); // guardamos el archivo como Blob
     }
   };
+
+
+
+
   useEffect(() => {
     return () => {
       if (imagePreview) {
@@ -41,13 +38,15 @@ const CatalogForm = () => {
     const newArticle = {
       description,
       price,
-      image,
+      imageBlob, // guardamos el Blob
       tags: selectedTags,
-    }
+    };
     await saveArticle(newArticle);
     setSuccessMessage('✅ Artículo guardado correctamente');
     setTimeout(() => setSuccessMessage(''), 3000);
-  }
+  };
+
+
   const handleTagChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -64,8 +63,25 @@ const CatalogForm = () => {
     <>
     <form onSubmit={handleSubmit}>
 
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
-      {imagePreview && <img src={imagePreview} alt="Vista previa" style={{ width: '200px' }} />}
+    <input
+  type="file"
+  accept="image/*"
+  onChange={handleImageUpload}
+  style={{ marginBottom: '1rem' }}
+ />
+
+{imagePreview && (
+  <img
+    src={imagePreview}
+    alt="Vista previa"
+    style={{
+      width: '200px',
+      height: 'auto',
+      borderRadius: '8px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+    }}
+  />
+)}
 
       <input
       type='text'
