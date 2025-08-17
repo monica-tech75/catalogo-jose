@@ -118,7 +118,7 @@ const CatalogForm = () => {
     </form>
     {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
-    <Link to='/catalogs'>Catalog</Link>
+    <Link to='/modificar'>Catalog</Link>
 
     </>
 

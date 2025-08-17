@@ -103,6 +103,22 @@ export const removeFromExportQueue = async (id) => {
 
 // Funciones para crear catalogs
 
+export const createCatalog = async (name) => {
+    const db = await getDB();
+    const tx = db.transaction('catalogs', 'readwrite');
+    const store = tx.objectStore('catalogs');
+
+    const newCatalog = {
+        name,
+        articleIds: [],
+        createdAt: new Date().toISOString()
+    };
+
+    const id = await store.add(newCatalog);
+    await tx.done;
+    return id;
+};
+
 export const addArticleToCatalog = async (catalogId, articleId) => {
     const db = await getDB();
     const tx = db.transaction('catalogs', 'readwrite');
@@ -149,4 +165,12 @@ export const removeArticleFromCatalog = async (catalogId, articleId) => {
     }
 
     await tx.done;
+};
+export const getAllCatalogs = async () => {
+    const db = await getDB();
+    const tx = db.transaction('catalogs', 'readonly');
+    const store = tx.objectStore('catalogs');
+    const catalogs = await store.getAll();
+    await tx.done;
+    return catalogs;
 };

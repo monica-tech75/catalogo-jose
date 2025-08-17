@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllArticles } from '../services/dbService';
+import { addArticleToCatalog, getAllArticles } from '../services/dbService';
 import { deleteArticleById } from '../services/dbService';
 import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
 import EditArticle from '../componentes/EditArticle';
+import { getAllCatalogs } from '../services/dbService';
 
 const Catalogs = () => {
     const navigate = useNavigate();
@@ -14,6 +15,9 @@ const Catalogs = () => {
     const [editingArticle, setEditingArticle] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
 
+    const [catalogs, setCatalogs] = useState([]);
+    const [selectedCatalog, setSelectedCatalog] = useState({});
+
     const categories = [ 'Todos', 'Fiestas', 'Deporte', 'Nombres', 'Puzzles', 'Figuras'];
 
     useEffect(() => {
@@ -21,7 +25,13 @@ const Catalogs = () => {
         const items = await getAllArticles();
         setArticles(items);
       };
+
+      const fetchCatalogs = async () => {
+        const cats = await getAllCatalogs();
+        setCatalogs(cats)
+      }
       fetchArticles();
+      fetchCatalogs();
     }, []);
 
     const filteredArticles = selectedCategory === 'Todos'
@@ -44,13 +54,12 @@ const Catalogs = () => {
       }
     };
 
-    console.log(articles);
 
   return (
     <>
     <div className='catalogs-container'>
         <h3><Link to="/">Inicio</Link></h3>
-        <h2>Catalogs</h2>
+        <h2>Crear Catalogos</h2>
         {/* Dropdown de categorias */}
         <div className="dropdown-container">
           <label htmlFor="category-select">Filtrar por categoria</label>
@@ -80,7 +89,25 @@ const Catalogs = () => {
               style={{ width: '150px' }}
             />
             <p>{item.description}</p>
-          <h3>{item.price} €</h3>
+            <select
+            value={selectedCatalog[item.id] || ''}
+            onChange={(e) => setSelectedCatalog(prev => ({...prev, [item.id]: e.target.value}))}
+            >
+              <option value=''>Selecciona catalogo</option>
+              {catalogs.map(cat => (
+                <option value={cat.id} key={cat.id}>{cat.name}</option>
+              ))}
+
+            </select>
+            <button onClick={async () => {
+              const catalogId = selectedCatalog[item.id];
+              if(!catalogId) return alert('Seleciona un catalogo primero');
+              await addArticleToCatalog(Number(catalogId), item.id);
+              alert('Articulo añadido al catalogo');
+            }}>
+              Añadir a Catalogo
+            </button>
+
 
           <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
           <button onClick={() => handleDelete(item)}>Eliminar</button>

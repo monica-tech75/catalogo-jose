@@ -18,7 +18,7 @@ const EditArticlePage = () => {
     }, [id]);
 
     const handleSave = () => {
-        navigate('/catalogs')
+        navigate('/modificar')
     }
     return (
         <>

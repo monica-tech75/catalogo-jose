@@ -3,7 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 import CatalogForm from "./componentes/CatalogForm";
 import Home from "./pages/Home";
 import Catalogs from "./pages/Catalogs";
-import EditArticlesPage from './pages/EditArticlesPage'
+import EditArticlesPage from './pages/EditArticlesPage';
+import CreateCatalog from "./componentes/CreateCatalog";
 
 export const router = createBrowserRouter([
     {
@@ -11,11 +12,11 @@ export const router = createBrowserRouter([
         element: <Home />
     },
     {
-         path: '/catalogs',
+         path: '/modificar',
         element: <Catalogs />
     },
     {
-         path: '/create',
+         path: '/createArticle',
         element: <CatalogForm />
     },
     {
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
         element: <EditArticlesPage />
     },
     {
-        path: '/export',
-        element: 'ExportCatalog'
+        path: '/crearCatalogo',
+        element: <CreateCatalog />
     }
 ])

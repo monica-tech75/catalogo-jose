@@ -7,14 +7,15 @@ const Navbar = () => {
 
     <nav className="navbar-center">
         <ul>
-           <li>
-            <Link to="/catalogs">Catalogos</Link>
+        <li>
+            <Link to="/createArticle">Añadir Articulo</Link>
            </li>
            <li>
-            <Link to="/create">Añadir Articulo</Link>
+            <Link to="/modificar">Modificar Articulo</Link>
            </li>
+
            <li>
-            <Link to="/">Eliminar Catalogo</Link>
+            <Link to="/crearCatalogo">Crear Catalogo</Link>
            </li>
            <li>
             <Link to="/">Modificar Catalogo</Link>
