@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Catalogs from "./pages/Catalogs";
 import EditArticlesPage from './pages/EditArticlesPage';
 import CreateCatalog from "./componentes/CreateCatalog";
+import ExportCatalog from "./componentes/ExportCatalog";
 
 export const router = createBrowserRouter([
     {
@@ -26,5 +27,9 @@ export const router = createBrowserRouter([
     {
         path: '/crearCatalogo',
         element: <CreateCatalog />
+    },
+    {
+        path: '/exportar',
+        element: <ExportCatalog />
     }
 ])

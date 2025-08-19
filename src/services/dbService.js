@@ -174,3 +174,19 @@ export const getAllCatalogs = async () => {
     await tx.done;
     return catalogs;
 };
+
+export const exportCatalog = async (catalogId) => {
+    const db = await getDB();
+    const catalog = await db.get('catalogs', catalogId);
+    if (!catalog || !catalog.articleIds) return '[]';
+
+    const tx = db.transaction('articles', 'readonly');
+    const store = tx.objectStore('articles');
+
+    const articles = await Promise.all(
+        catalog.articleIds.map(id => store.get(id))
+    );
+
+    await tx.done;
+    return JSON.stringify(articles.filter(Boolean), null, 2)
+}

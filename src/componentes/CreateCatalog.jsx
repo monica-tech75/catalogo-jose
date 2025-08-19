@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react"
 import { createCatalog, getAllCatalogs, getArticlesByCatalog } from "../services/dbService";
+import { Link, useNavigate } from "react-router-dom";
 import '../styles/catalog.css'
 
 const CreateCatalog = () => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [catalogs, setCatalogs] = useState([]);
-    const [selectedCatalog, setSelectedCatalog] = useState(null)
+    const [selectedCatalog, setSelectedCatalog] = useState(null);
+    const navigate = useNavigate();
 
     const handleCreate = async () => {
         if(!name.trim()) return setMessage('⚠️ El nombre no puede estar vacio');
@@ -43,10 +45,15 @@ const CreateCatalog = () => {
             }
         };
         fetchCatalogs();
-    })
+    });
+
+    const navigateToCatalog = (catalog) => {
+        navigate('/exportar', { state: { catalog }})
+    }
 
   return (
     <>
+    <Link to="/"><button>🏠 Volver a Inicio</button></Link>
       <div>
         <h2>Crear nuevo catalogo</h2>
         <input
@@ -60,10 +67,12 @@ const CreateCatalog = () => {
     </div>
 
     <div className="catalogs-wrapper">
-        <ul>
+        <h2>Catalogos Disponibles</h2>
+        <ul className="catalogos-lista">
             {
                 catalogs.map(cat => (
-                    <li key={cat.name} onClick={() => handleSelectedCatalog(cat)}><strong>{cat.name} (ID: {cat.id})</strong></li>
+                    <li key={cat.id} onClick={() => handleSelectedCatalog(cat)}><strong>{cat.name} (ID: {cat.id})</strong></li>
+
                 ))
             }
         </ul>
@@ -78,8 +87,14 @@ const CreateCatalog = () => {
                     ))}
                 </ul>
 
+
+
             </div>
         )}
+        <button onClick={() => navigateToCatalog(selectedCatalog)}>
+            📤 Ir a exportar catálogo
+        </button>
+        {/* <ExportCatalog catalog={selectedCatalog}/> */}
 
     </>
 
