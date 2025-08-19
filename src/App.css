@@ -1,8 +1,6 @@
 #root {
   width: 100vw;
   margin: 0 auto;
-  padding: 20px;
-  color: bisque;
 }
 
 img {
@@ -16,14 +14,17 @@ li {
 
 /*  Header y Navbar */
 
-header img.logo {
-  width: 50px;
-  height: 50px;
+header img.logo-header {
+  width: 150px;
+  background-color: var(--color-blanco-hueso);
+  margin-left: 20px;
 }
 
 header {
+  background-color: var(--color-blanco-hueso);
+  color: var(--color-negro-carbon);
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 20px;
 }
 

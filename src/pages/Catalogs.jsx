@@ -99,6 +99,9 @@ const Catalogs = () => {
               ))}
 
             </select>
+            <div className='edit-buttons'>
+
+            </div>
             <button onClick={async () => {
               const catalogId = selectedCatalog[item.id];
               if(!catalogId) return alert('Seleciona un catalogo primero');
@@ -108,8 +111,8 @@ const Catalogs = () => {
               Añadir a Catalogo
             </button>
 
-
           <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
+
           <button onClick={() => handleDelete(item)}>Eliminar</button>
           </div>
         );

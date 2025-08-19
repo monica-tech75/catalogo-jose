@@ -1,9 +1,26 @@
+:root {
+  --color-negro-carbon: #1C1C1C;
+  --color-madera-calida: #A47551;
+  --color-gris-humo: #E5E5E5;
+  --color-blanco-hueso: #F9F7F4;
+  --color-verde-olivo: #6B8E23;
+  --color-dorado-suave: #C9A86A;
+  --color-madera-oscuro: rgba(150, 82, 19, 0.956);
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
   padding: 0;
-  background-color: #1a1a1a;
-  color: bisque;
+  background-color: var(--color-blanco-hueso);
+  color: var(--color-negro-carbon);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+li,
+input,
+button {
+  font-family: inherit;
 }
 
 h1 {
@@ -12,15 +29,14 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid transparent;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  border: 2px solid #646cff;
+  border: 2px solid var(--color-verde-olivo);
 }
