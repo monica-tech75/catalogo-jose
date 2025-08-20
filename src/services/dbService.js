@@ -3,13 +3,16 @@ import { openDB } from "idb";
 // Crear y Guardar articulos en la database
 
 export const getDB = async () => {
-    return await openDB('CatalogDB', 4, {
+    return await openDB('CatalogDB', 5, {
         upgrade(db) {
             if (!db.objectStoreNames.contains('articles')) {
                 db.createObjectStore('articles', { keyPath: 'id', autoIncrement: true });
             }
             if (!db.objectStoreNames.contains('catalogs')) {
                 db.createObjectStore('catalogs', { keyPath: 'id', autoIncrement: true });
+            }
+            if (!db.objectStoreNames.contains('tags')) {
+                db.createObjectStore('tags', { keyPath: 'id', autoIncrement: true })
             }
             if (!db.objectStoreNames.contains('exportQueue')) {
                 db.createObjectStore('exportQueue', { keyPath: 'id', autoIncrement: true });
@@ -113,7 +116,6 @@ export const createCatalog = async (name) => {
         articleIds: [],
         createdAt: new Date().toISOString()
     };
-
     const id = await store.add(newCatalog);
     await tx.done;
     return id;
@@ -132,7 +134,6 @@ export const addArticleToCatalog = async (catalogId, articleId) => {
             await store.put(catalog);
         }
     }
-
     await tx.done;
 };
 
@@ -148,7 +149,6 @@ export const getArticlesByCatalog = async (catalogId) => {
     const articles = await Promise.all(
         catalog.articleIds.map(id => store.get(id))
     );
-
     await tx.done;
     return articles.filter(Boolean); // Por si alguno no existe
 };
@@ -163,7 +163,6 @@ export const removeArticleFromCatalog = async (catalogId, articleId) => {
         catalog.articleIds = catalog.articleIds.filter(id => id !== articleId);
         await store.put(catalog);
     }
-
     await tx.done;
 };
 export const getAllCatalogs = async () => {
@@ -186,7 +185,51 @@ export const exportCatalog = async (catalogId) => {
     const articles = await Promise.all(
         catalog.articleIds.map(id => store.get(id))
     );
-
     await tx.done;
     return JSON.stringify(articles.filter(Boolean), null, 2)
+}
+
+// Obtener todas las etiquetas
+
+export const getAllTags = async () => {
+    const db = await getDB();
+    const tx = db.transaction('tags', 'readonly');
+    const store = tx.objectStore('tags');
+    const allTags = await store.getAll();
+    await tx.done;
+    return allTags;
+}
+
+// Añadir etiquetas
+
+export const addTag = async (name) => {
+    const db = await getDB();
+    const tx = db.transaction('tags', 'readwrite');
+    const store = tx.objectStore('tags');
+
+    const existingTags = await store.getAll();
+    const exists = existingTags.some(tag => tag.name.toLowerCase() === name.toLowerCase());
+    if (!exists) {
+        await store.add({ name });
+    }
+    await tx.done;
+}
+
+
+
+// Eliminar etiquetas
+
+export const deleteTagById = async (id) => {
+    const db = await openDB();
+    const tx = db.transaction('tags', 'readwrite');
+    const store = tx.objectStore('tags');
+    const existing = await store.get(tagId);
+    if (!existing) {
+        await tx.done;
+        return { success: false, message: `Tag con ID ${tagId} no encontrado.` };
+    }
+    await store.delete(tagId);
+    await tx.done;
+    return { success: true, message: `Tag con id ${tagId} eliminado correctamente` }
+
 }
