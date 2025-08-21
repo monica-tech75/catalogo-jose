@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { saveArticle } from '../services/dbService';
+import '../styles/catalogForm.css'
 
 
 const CatalogForm = () => {
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [imageBlob, setImageBlob] = useState(null); // en lugar de image
 
+  const navigate = useNavigate();
+  const [description, setDescription] = useState('');
+  const [privateDescription, setPrivateDescription] = useState('');
+  const [imageBlob, setImageBlob] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
-  const [ selectedTags, setSelectedTags] = useState([]);
 
 
   const handleImageUpload = (e) => {
@@ -37,40 +38,42 @@ const CatalogForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('📝 Guardando artículo:', {
-      description,
-      price,
-      imageBlob,
-      tags: selectedTags,
-    });
+
     const newArticle = {
       description,
-      price,
+      privateDescription,
       imageBlob, // guardamos el Blob
-      tags: selectedTags,
     };
-    await saveArticle(newArticle);
-    setSuccessMessage('✅ Artículo guardado correctamente');
-    setTimeout(() => setSuccessMessage(''), 3000);
-  };
+    try {
+      await saveArticle(newArticle);
+      setSuccessMessage('✅ Artículo guardado correctamente');
 
-
-  const handleTagChange = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setSelectedTags([...selectedTags, value]);
-    } else {
-      setSelectedTags(selectedTags.filter(tag => tag !== value))
+      setTimeout(() => {
+        setSuccessMessage('');
+        navigate('/modificar')
+      }, 2000);
+    } catch (error) {
+      console.error('Error al guardar', error);
+      setSuccessMessage('❌ Error al guardar el artículo');
     }
-  }
-
-
+  };
 
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form-articulo'>
+      <section className='select-file'>
 
+
+    <div className="image-preview-container">
+      {imagePreview ? (
+        <img src={imagePreview} alt='Vista previa' />
+      ) : (
+        <div className="image-placeholder">
+          Sube una imagen
+        </div>
+      )}
+    </div>
     <input
   type="file"
   accept="image/*"
@@ -78,47 +81,39 @@ const CatalogForm = () => {
   style={{ marginBottom: '1rem' }}
  />
 
-{imagePreview && (
-  <img
-    src={imagePreview}
-    alt="Vista previa"
-    style={{
-      width: '200px',
-      height: 'auto',
-      borderRadius: '8px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-    }}
-  />
-)}
+      </section>
 
-      <input
-      type='text'
-      placeholder='descripcion'
+
+
+      <label htmlFor='description'>Descripcion</label>
+      <textarea
+      id='description'
+      placeholder='Descripcion Completa'
       value={description}
       onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-      type='number'
-      placeholder='precio'
-      value={price}
-      onChange={(e) => setPrice(e.target.value)}
-      />
-      <span>Euros</span>
-      <div>
-        <label>Etiquetas</label>
-        <div>
-          <label><input type="checkbox" value="Fiestas" onChange={handleTagChange}/>Fiestas</label>
-          <label><input type="checkbox" value="Deporte" onChange={handleTagChange}/>Deporte</label>
-          <label><input type="checkbox" value="Nombres" onChange={handleTagChange}/>Nombres</label>
-          <label><input type="checkbox" value="Puzzles" onChange={handleTagChange}/>Puzzles</label>
-          <label><input type="checkbox" value="Figuras" onChange={handleTagChange}/>Figuras</label>
-        </div>
-      </div>
-      <button type='submit'>Guardar Articulo</button>
-    </form>
-    {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+      rows={5}
+      >
+      </textarea>
+      <label htmlFor='privado'>Anotacion Privada</label>
+      <textarea
+      id='privado'
+      placeholder='Anotaciones privadas'
+      value={privateDescription}
+      onChange={(e) => setPrivateDescription(e.target.value)}
+      rows={5}
+      >
+      </textarea>
 
-    <Link to='/modificar'>Catalog</Link>
+      <button type='submit'>Guardar Articulo</button>
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
+      <Link to='/modificar'>Catalog</Link>
+
+
+    </form>
+
+
+
 
     </>
 

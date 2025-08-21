@@ -10,7 +10,6 @@ const EditArticle = ({ article, onSave }) => {
     const [availableTags, setAvailableTags] = useState([]);
     const [newTag, setNewTag] = useState('');
 
-    const categories = ['Fiestas', 'Deporte', 'Figuras', 'Puzzles'];
 
     const handleTagChange = (e) => {
       const { value, checked } = e.target;
@@ -66,19 +65,7 @@ const EditArticle = ({ article, onSave }) => {
 
 <input value={description} onChange={(e) => setDescription(e.target.value)} />
 <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-<div>
-  {categories.map(cat => (
-    <label key={cat}>
-      <input
-        type="checkbox"
-        value={cat}
-        checked={tags.includes(cat)}
-        onChange={handleTagChange}
-      />
-      {cat}
-    </label>
-  ))}
-</div>
+
 <div>
   <input
   type='text'
