@@ -74,24 +74,26 @@ const CatalogForm = () => {
         </div>
       )}
     </div>
+    <div className='buttons-form'>
     <input
   type="file"
   accept="image/*"
   onChange={handleImageUpload}
   style={{ marginBottom: '1rem' }}
  />
+ <button type='submit'>Guardar Articulo</button>
+    </div>
+
 
       </section>
 
-
-
-      <label htmlFor='description'>Descripcion</label>
+      <label htmlFor='description'>Description</label>
       <textarea
       id='description'
       placeholder='Descripcion Completa'
       value={description}
       onChange={(e) => setDescription(e.target.value)}
-      rows={5}
+      rows={2}
       >
       </textarea>
       <label htmlFor='privado'>Anotacion Privada</label>
@@ -100,11 +102,11 @@ const CatalogForm = () => {
       placeholder='Anotaciones privadas'
       value={privateDescription}
       onChange={(e) => setPrivateDescription(e.target.value)}
-      rows={5}
+      rows={2}
       >
       </textarea>
 
-      <button type='submit'>Guardar Articulo</button>
+
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
       <Link to='/modificar'>Catalog</Link>

@@ -18,6 +18,31 @@
     font-weight: 500;
 }
 
+.crear-catalogo {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+}
+
+.mensaje-catalogo {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #4caf50;
+}
+
+.btn-quitar {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    margin-top: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+
 /*  Tarjeta de Articulo   */
 
 .gallery {
@@ -38,9 +63,40 @@
     cursor: pointer;
 }
 
+.card.en-catalogo {
+    border: 2px solid #4caf50;
+    background-color: #e8f5e9;
+}
+
+.card.en-catalogo textarea {
+    background-color: #f0fff0;
+    font-weight: bold;
+}
+
+.card.en-catalogo::after {
+    content: "✔ Ya en catálogo";
+    color: #4caf50;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #ffffff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.card input[type="checkbox"] {
+    margin-right: -90%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #0077cc;
+    accent-color: #0077cc;
 }
 
 /* Image del Articulo */

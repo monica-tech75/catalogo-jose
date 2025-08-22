@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addArticleToCatalog, getAllArticles, getAllTags } from '../services/dbService';
-import { deleteArticleById } from '../services/dbService';
+import { addArticleToCatalog, createCatalog, getAllArticles, getAllTags } from '../services/dbService';
 import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
 import { getAllCatalogs } from '../services/dbService';
@@ -13,52 +12,45 @@ const Catalogs = () => {
     const [selectedCategory, setSelectedCategory] = useState('Todos');
     const [catalogs, setCatalogs] = useState([]);
     const [selectedCatalog, setSelectedCatalog] = useState({});
-    const [availableTags, setAvailableTags] = useState([])
+    const [availableTags, setAvailableTags] = useState([]);
+    const [newCatalogName, setNewCatalogName] = useState('');
+    const [catalogMessage, setCatalogMessage] = useState('');
 
 
     useEffect(() => {
-      const fetchArticles = async () => {
-        const items = await getAllArticles();
-        setArticles(items);
+      const fetchData = async () => {
+        try {
+          const [items, cats, allTags] = await Promise.all([
+            getAllArticles(),
+            getAllCatalogs(),
+            getAllTags()
+          ]);
+
+          setArticles(items);
+          setCatalogs(cats);
+          setAvailableTags(['Todos', ...allTags.map(tag => tag.name)]);
+        } catch (error) {
+          console.error('Error al cargar datos:', error);
+          // Aquí puedes mostrar un mensaje al usuario si quieres
+        }
       };
 
-      const fetchCatalogs = async () => {
-        const cats = await getAllCatalogs();
-        setCatalogs(cats)
-      };
-      const fetchTags = async () => {
-        const allTags = await getAllTags();
-        setAvailableTags(['Todos', ...allTags.map(tag => tag.name)])
-      };
-      fetchArticles();
-      fetchCatalogs();
-      fetchTags()
+      fetchData();
     }, []);
+
 
     const filteredArticles = selectedCategory === 'Todos'
     ? articles
     : articles.filter(item => Array.isArray(item.tags) && item.tags.includes(selectedCategory));
 
 
-    const handleDelete = async (item) => {
-      const result = await deleteArticleById(item.id);
-      alert(result.message);
 
-      if (result.success) {
-        setArticles(prev => prev.filter(article => article.id !== item.id));
-      }
-    };
     // Checkbox de seleccion multiple
 
     const handleCheckboxChange = (articleId, checked) => {
       setSelectedArticles(prev =>
         checked ? [...prev, articleId] : prev.filter(id => id !== articleId)
       );
-    };
-    // Selecion de catalogo por articulo
-
-    const handleCatalogSelect = (articleId, catalogId) => {
-      setSelectedCatalog(prev => ({ ...prev, [articleId]: catalogId }));
     };
 
     // Verificar si el articulo ya esta en el catalogo
@@ -69,19 +61,6 @@ const Catalogs = () => {
       return catalog?.articleIds?.includes(articleId)
     };
 
-    // Añadir articulo individualmente
-
-    const handleAddToCatalog = async (articleId) => {
-      const catalogId = selectedCatalog[articleId];
-      if (!catalogId) return alert('Selecciona un catalogo primero');
-
-      if (isArticleInCatalog(catalogId, articleId)) {
-        return alert('Este articulo ya esta en el catalogo')
-      }
-
-      await addArticleToCatalog(Number(catalogId), articleId);
-      alert('Articulo añadido correctamente');
-    };
     // Añadir articulos seleccionados en lote
 
     const handleBulkAddToCatalog = async () => {
@@ -111,6 +90,38 @@ const Catalogs = () => {
       setSelectedArticles([]);
     };
 
+    const handleCreateCatalog = async () => {
+      if(!newCatalogName.trim()) return setCatalogMessage('⚠️ El nombre no puede estar vacio');
+      try {
+        // crear nuevo catalogo
+        const id = await createCatalog(newCatalogName.trim());
+
+        // Añadir el nuevo catalogo
+        const newCatalog = {id, name: newCatalogName.trim(), articleIds: [] };
+        setCatalogs(prev => [...prev, newCatalog]);
+        setNewCatalogName('');
+        setCatalogMessage(`✅ Catalogo "${newCatalogName.trim()}" creado con exito`)
+      } catch (error) {
+        console.error(error);
+        setCatalogMessage('❌ Error al crear el catalogo')
+      }
+    };
+
+    // Eliminar articulo del catalogo
+    const handleRemoveFromCatalog = async (articleId) => {
+      const catalogId = selectedCatalog.bulk;
+      if (!catalogId) return alert('Selecciona un catálogo primero');
+
+      try {
+        await removeArticleFromCatalog(Number(catalogId), articleId);
+        const updatedCatalogs = await getAllCatalogs();
+        setCatalogs(updatedCatalogs);
+        alert(`🗑 Artículo ${articleId} eliminado del catálogo`);
+      } catch (error) {
+        console.error(error);
+        alert('❌ Error al eliminar el artículo del catálogo');
+      }
+    };
 
 
   return (
@@ -150,6 +161,16 @@ const Catalogs = () => {
           </select>
           <button onClick={handleBulkAddToCatalog}>Añadir a catalogo</button>
           <button onClick={clearSeleccion}>Limpiar Seleccion</button>
+          <div className='crear-catalogo'>
+            <input
+            type='text'
+            value={newCatalogName}
+            placeholder='Crear nuevo catalogo'
+            onChange={(e) => setNewCatalogName(e.currentTarget.value)}
+             />
+          <button onClick={handleCreateCatalog}>Crear Catalogo</button>
+          {catalogMessage && <p className='mensaje-catalogo'>{catalogMessage}</p>}
+          </div>
 
         </div>
         <div className="gallery">
@@ -158,36 +179,36 @@ const Catalogs = () => {
       try {
         const imageUrl = URL.createObjectURL(item.imageBlob);
         return (
-          <div key={item.id} className="card">
+          <div key={item.id} className={`card ${
+            selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id)
+              ? 'en-catalogo'
+              : ''
+         }`}>
             <input
             type='checkbox'
             checked={selectedArticles.includes(item.id)}
             onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
+            className='checkbox-añadir'
+
              />
             <img
               src={imageUrl}
               alt="Artículo"
               style={{ width: '150px' }}
             />
-            <p>{item.description}</p>
-            <select
-            value={selectedCatalog[item.id] || ''}
-            onChange={(e) => handleCatalogSelect(item.id, e.target.value)}
-            >
-              <option value=''>Selecciona catalogo</option>
-              {catalogs.map(cat => (
-                <option value={cat.id} key={cat.id}>{cat.name}</option>
-              ))}
+            <textarea value={item.description} readOnly />
 
-            </select>
             <div className='edit-buttons'>
-            <button onClick={() => handleAddToCatalog(item.id)}>
-              Añadir a Catalogo
-            </button>
+              <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
+            {selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id) && (
+              <button
+                className="btn-quitar"
+                onClick={() => handleRemoveFromCatalog(item.id)}
+            >
+              Eliminar
+              </button>
+            )}
 
-          <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
-
-          <button onClick={() => handleDelete(item)}>Eliminar</button>
 
             </div>
 

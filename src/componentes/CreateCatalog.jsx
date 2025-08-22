@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { createCatalog, getAllCatalogs, getArticlesByCatalog } from "../services/dbService";
+import { createCatalog, getAllCatalogs, getArticlesByCatalog, removeArticleFromCatalog } from "../services/dbService";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/catalog.css'
 
@@ -19,10 +19,8 @@ const CreateCatalog = () => {
             // Añadir el nuevo catalogo
             const newCatalog = {id, name: name.trim(), articleIds: [] }
             setCatalogs(prev => [...prev, newCatalog])
-            // const updateCatalogs = await getAllCatalogs();
             setName('');
             setMessage(`✅ Catálogo "${name.trim()}" creado con éxito`);
-            // setCatalogs(updateCatalogs)
         } catch (error) {
             console.error(error);
             setMessage('❌ Error al crear el catalogo')
@@ -94,7 +92,7 @@ const CreateCatalog = () => {
         <button onClick={() => navigateToCatalog(selectedCatalog)}>
             📤 Ir a exportar catálogo
         </button>
-        {/* <ExportCatalog catalog={selectedCatalog}/> */}
+
 
     </>
 

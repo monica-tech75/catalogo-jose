@@ -18,6 +18,11 @@ form .select-file {
     justify-content: space-around;
 }
 
+form .buttons-form {
+    display: flex;
+    flex-direction: column;
+}
+
 .form-articulo input[type="file"] {
     font-size: 0;
     /* oculta el texto del nombre del archivo */
