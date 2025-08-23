@@ -1,47 +1,98 @@
 /* Estilo general del contenedor */
 .catalogs-container {
     padding: 20px;
-    background-color: var(color-blanco-hueso);
+    background-color: var(--color-blanco-hueso);
     min-height: 100vh;
 }
 
+.nav-crear {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 /* Encabezados */
-.catalogs-container h2 {
-    text-align: center;
-    color: bisque;
-    margin-bottom: 20px;
+.catalogs-container .dropdown-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.dropdown-container select,
+.dropdown-container input[type="text"] {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-width: 100px;
+    background-color: #fff;
+}
+
+.añadir-limpiar button,
+.crear-catalogo button,
+.edit-buttons:first-child {
+    padding: 0.25rem 0.50rem;
+    font-size: 0.95rem;
+    background-color: var(--color-verde-olivo);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.4s ease both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.añadir-limpiar button:hover,
+.crear-catalogo button:hover,
+.card.en-catalogo button:hover {
+    background-color: var(--color-madera-oscuro);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 .catalogs-container h3 a {
     text-decoration: none;
-    color: #4a90e2;
+    color: var(--color-madera-oscuro);
     font-weight: 500;
-}
-
-.crear-catalogo {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    background-color: #fafafa;
 }
 
 .mensaje-catalogo {
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #4caf50;
+    color: var(--color-verde-olivo);
 }
 
-.btn-quitar {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    margin-top: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    border-radius: 4px;
+.añadir-limpiar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
+.crear-catalogo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 200px;
+}
 
 /*  Tarjeta de Articulo   */
 
@@ -54,6 +105,11 @@
 
 /* Tarjetas */
 .card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
     background-color: var(--color-dorado-suave);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -61,6 +117,7 @@
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    position: relative;
 }
 
 .card.en-catalogo {
@@ -69,6 +126,8 @@
 }
 
 .card.en-catalogo textarea {
+    width: 100%;
+    max-width: 100%;
     background-color: #f0fff0;
     font-weight: bold;
 }
@@ -119,6 +178,26 @@
     margin-top: 10px;
 }
 
+.card textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+.card.en-catalogo button {
+    margin: 10px;
+}
+
+.btn-quitar {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    margin-top: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
 .success-message {
     background-color: #d4edda;
     color: #155724;
@@ -127,9 +206,7 @@
     border-radius: 5px;
 }
 
-.catalogs-wrapper {
-    color: bisque;
-}
+
 
 .export-catalog button {
     margin-top: 10px;

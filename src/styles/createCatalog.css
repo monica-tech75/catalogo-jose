@@ -1,0 +1,71 @@
+.catalogs-wrapper {
+    width: 100%;
+    min-height: 200px;
+    background-color: bisque;
+    text-align: center;
+}
+
+.catalogs-wrapper ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    background-color: var(--color-blanco-hueso);
+    padding: 20px;
+}
+
+.catalogs-wrapper ul li {
+    padding: 0.2rem 0.5rem;
+    color: var(--color-blanco-hueso);
+}
+
+.catalogs-wrapper ul li:nth-child(odd) {
+    background-color: var(--color-madera-calida);
+}
+
+.catalogs-wrapper ul li:nth-child(even) {
+    background-color: var(--color-verde-olivo);
+}
+
+.container-preview {
+    margin-top: 2rem;
+    padding: 3rem;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+}
+
+
+.container-preview h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--color-madera-oscuro);
+}
+
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 3rem;
+
+}
+
+.card-preview {
+    background-color: var(--color-dorado-suave);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-preview img {
+    width: 100%;
+    max-height: fit-content;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}

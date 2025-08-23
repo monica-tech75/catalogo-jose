@@ -25,7 +25,14 @@ textarea {
   font-family: inherit;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1,
+h2,
+h3,
+h4 {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
 }

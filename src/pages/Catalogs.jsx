@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addArticleToCatalog, createCatalog, getAllArticles, getAllTags } from '../services/dbService';
+import { addArticleToCatalog, createCatalog, getAllArticles, getAllTags, removeArticleFromCatalog } from '../services/dbService';
 import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
 import { getAllCatalogs } from '../services/dbService';
+import { FaAngleDoubleLeft } from "react-icons/fa";
 
 const Catalogs = () => {
     const navigate = useNavigate();
@@ -81,7 +82,10 @@ const Catalogs = () => {
       };
 
       alert(`${articlesToAdd.length} articulo(s) añadidos al catalogo`);
-      setSelectedArticles([])
+      setSelectedArticles([]);
+
+      const updatedCatalogs = await getAllCatalogs();
+      setCatalogs(updatedCatalogs)
     }
 
     // Limpiar seleccion
@@ -128,12 +132,16 @@ const Catalogs = () => {
     <>
     <div className='catalogs-container'>
       <section className='nav-crear'>
+    <FaAngleDoubleLeft />
       <h3><Link to="/">Inicio</Link></h3>
+      <h3><Link to="/crearCatalogo">Crear</Link></h3>
       </section>
 
         {/* Dropdown de categorias */}
         <div className="dropdown-container">
-          <label htmlFor="category-select">Filtrar por categoria</label>
+          <label htmlFor="category-select"
+          className='sr-only'
+          >Filtrar</label>
           <select
           name="category-select"
           id="category-select"
@@ -159,16 +167,20 @@ const Catalogs = () => {
             ))}
 
           </select>
+
+          <div className='btn añadir-limpiar'>
           <button onClick={handleBulkAddToCatalog}>Añadir a catalogo</button>
           <button onClick={clearSeleccion}>Limpiar Seleccion</button>
+          </div>
+
           <div className='crear-catalogo'>
             <input
             type='text'
             value={newCatalogName}
-            placeholder='Crear nuevo catalogo'
+            placeholder='Nombre'
             onChange={(e) => setNewCatalogName(e.currentTarget.value)}
              />
-          <button onClick={handleCreateCatalog}>Crear Catalogo</button>
+          <button onClick={handleCreateCatalog}>Nuevo Catalogo</button>
           {catalogMessage && <p className='mensaje-catalogo'>{catalogMessage}</p>}
           </div>
 
@@ -186,6 +198,7 @@ const Catalogs = () => {
          }`}>
             <input
             type='checkbox'
+            disabled={selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id)}
             checked={selectedArticles.includes(item.id)}
             onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
             className='checkbox-añadir'
@@ -197,9 +210,12 @@ const Catalogs = () => {
               style={{ width: '150px' }}
             />
             <textarea value={item.description} readOnly />
-
+            <textarea value={item.privateDescription} readOnly />
             <div className='edit-buttons'>
-              <button onClick={() => navigate(`/editar/${item.id}`)}>Editar</button>
+              <button
+              onClick={() => navigate(`/editar/${item.id}`)}
+              className='btn-editar'
+              >Editar</button>
             {selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id) && (
               <button
                 className="btn-quitar"
@@ -230,12 +246,7 @@ const Catalogs = () => {
 
 
     </div>
-   {/*  {isEditing && editingArticle && (
-      <EditArticle
-      article={editingArticle}
-      onSave={handleSave}
-      />
-    )} */}
+
     </>
 
   )
