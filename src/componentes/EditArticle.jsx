@@ -77,15 +77,30 @@ return (
       </div>
 
       <section className='tag-list'>
-      <div className='tags-availables'>
-        <h4>Etiquetas Disponibles</h4>
-        {availableTags.map(tag => (
-        <label key={tag}>
-          <input type='checkbox' value={tag} checked={tags.includes(tag)} onChange={handleTagChange} />
+      <h4>Etiquetas Disponibles</h4>
+  <div className="tag-chips">
+    {availableTags.map(tag => {
+      const isSelected = tags.includes(tag);
+
+      // Simular el evento que handleTagChange espera
+      const fakeEvent = {
+        target: {
+          value: tag,
+          checked: !isSelected
+        }
+      };
+
+      return (
+        <span
+          key={tag}
+          className={`tag-chip ${isSelected ? 'selected' : ''}`}
+          onClick={() => handleTagChange(fakeEvent)}
+        >
           {tag}
-        </label>
-        ))}
-      </div>
+        </span>
+      );
+    })}
+  </div>
       <div className='edit-tags'>
         <input type='text' placeholder='Añadir etiqueta' value={newTag} onChange={(e)=> setNewTag(e.target.value)}
         />
