@@ -9,6 +9,7 @@ const CatalogForm = () => {
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
   const [privateDescription, setPrivateDescription] = useState('');
+  const [title, setTitle] = useState('');
   const [imageBlob, setImageBlob] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
@@ -40,6 +41,7 @@ const CatalogForm = () => {
     e.preventDefault();
 
     const newArticle = {
+      title,
       description,
       privateDescription,
       imageBlob, // guardamos el Blob
@@ -83,11 +85,16 @@ const CatalogForm = () => {
  />
  <button type='submit'>Guardar Articulo</button>
     </div>
-
-
       </section>
-
-      <label htmlFor='description'>Description</label>
+      <label htmlFor='title'>Titulo</label>
+      <input
+      name='title'
+      id='title'
+      placeholder='Titulo'
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+      />
+      <label htmlFor='description'>Descripcion</label>
       <textarea
       id='description'
       placeholder='Descripcion Completa'

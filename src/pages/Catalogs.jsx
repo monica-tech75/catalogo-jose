@@ -196,14 +196,16 @@ const Catalogs = () => {
               ? 'en-catalogo'
               : ''
          }`}>
+
             <input
             type='checkbox'
             disabled={selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id)}
             checked={selectedArticles.includes(item.id)}
             onChange={(e) => handleCheckboxChange(item.id, e.target.checked)}
             className='checkbox-añadir'
-
              />
+             <p>Articulo <span>{item.id}</span></p>
+           <p className='titulo-articulo'>{item.title}</p>
             <img
               src={imageUrl}
               alt="Artículo"
