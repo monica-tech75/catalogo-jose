@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { getAllCatalogs, getArticlesByCatalog } from "../services/dbService";
 import { Link, useNavigate } from "react-router-dom";
-import { colorAleatorio } from "../services/utilities";
 import '../styles/createCatalog.css';
 
 const CreateCatalog = () => {

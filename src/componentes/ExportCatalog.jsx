@@ -133,6 +133,10 @@ font-size: 0.9rem;
   opacity: 1;
   transform: scale(1);
 }
+  .item a img:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
 
 @media (max-width: 600px) {
   .grid {
@@ -174,6 +178,14 @@ font-size: 0.9rem;
                     <img src="${base64Image}" alt="Imagen del artículo ${article.id}" />
                 </a>
                 <textarea>${article.description}</textarea>
+                <a
+  href="https://wa.me/?text=Artículo%20${article.id}%0A${article.description}"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Compartir por WhatsApp" style="width: 24px; height: 24px;" />
+</a>
+
             </div>
             `;
           }

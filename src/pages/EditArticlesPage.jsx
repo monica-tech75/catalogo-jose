@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getArticleById } from '../services/dbService';
 import EditArticle from '../componentes/EditArticle';
+import '../styles/editArticle.css'
 
 const EditArticlePage = () => {
     const { id } = useParams();

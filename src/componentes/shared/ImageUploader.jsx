@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import '../../styles/editArticle.css'
 const ImageUploader = ({ initialImageBlob, onImageChange }) => {
 
     const [imageBlob, setImageBlob] = useState(initialImageBlob || null);
@@ -32,13 +32,13 @@ const ImageUploader = ({ initialImageBlob, onImageChange }) => {
         }
       }, [initialImageBlob]);
   return (
-    <div>
+    <div className="edit-select-img">
     <input type="file" accept="image/*" onChange={handleImageUpload} />
     {imagePreview && (
       <img
         src={imagePreview}
         alt="Vista previa"
-        style={{ width: '150px', marginTop: '10px' }}
+        className="edit-img"
       />
     )}
   </div>

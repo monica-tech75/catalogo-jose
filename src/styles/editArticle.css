@@ -1,0 +1,133 @@
+* {
+    box-sizing: border-box;
+}
+
+.edit-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto;
+    padding: 2rem;
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.title-description {
+    max-width: 90svw;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.title-description label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.title-description input,
+.title-description textarea {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.title-description input:focus,
+.title-description textarea:focus {
+    border-color: #0078d4;
+    outline: none;
+}
+
+.tag-list {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tags-availables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.tags-availables label {
+    background-color: #e6f0ff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.edit-tags {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.edit-tags input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.edit-tags button {
+    padding: 0.5rem 1rem;
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-tags button:hover {
+    background-color: #005fa3;
+}
+
+button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Responsive padding para pantallas pequeñas */
+@media (max-width: 600px) {
+    .edit-form {
+        padding: 1rem;
+    }
+
+    .title-description,
+    .tag-list {
+        gap: 0.75rem;
+    }
+
+    .edit-tags {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .edit-tags input,
+    .edit-tags button {
+        width: 90%;
+    }
+}
