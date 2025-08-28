@@ -12,7 +12,7 @@
 
 .export-catalog {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 50px;
 }
 
@@ -31,19 +31,24 @@
 .carrusel-preview {
     position: relative;
     width: 100%;
-    max-width: 500px;
+    max-width: 100%;
     overflow: hidden;
 }
 
 .carrusel-imagenes {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    touch-action: pan-x;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
 .carrusel-imagenes img {
     width: 100%;
     flex: 0 0 100%;
     border-radius: 6px;
+    scroll-snap-align: start;
 }
 
 .carrusel-botones {
@@ -117,4 +122,15 @@
 .btn-wrapper-descarga button:nth-child(3):hover {
     background-color: var(--color-verde-olivo);
     color: var(--color-blanco-hueso);
+}
+
+@media (max-width: 600px) {
+    .export-catalog {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .carrusel-botones {
+        display: none;
+    }
 }

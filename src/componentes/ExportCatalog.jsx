@@ -52,11 +52,7 @@ const generarHTMLCatalogo = async () => {
           text-align: center;
           margin-bottom: 40px;
         }
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-          gap: 50px;
-        }
+
         .item {
           background-color: #fff8e1;
           border-radius: 10px;
@@ -73,23 +69,29 @@ const generarHTMLCatalogo = async () => {
           border: 1px solid #ccc;
           border-radius: 6px;
           padding: 0.5rem;
-          font-size: 0.9rem;
+          font-size: 1.2rem;
           background-color: #fff;
         }
         .carrusel {
           position: relative;
           width: 100%;
-          max-width: 500px;
+          max-width: 100%;
           overflow: hidden;
         }
-        .carrusel-imagenes {
-          display: flex;
-          transition: transform 0.5s ease-in-out;
-        }
+
+       .carrusel-imagenes {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    touch-action: pan-x;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
         .carrusel-imagenes img {
           width: 100%;
           flex: 0 0 100%;
           border-radius: 6px;
+          scroll-snap-align: start;
         }
         .carrusel-botones {
           position: absolute;
@@ -117,7 +119,18 @@ const generarHTMLCatalogo = async () => {
           .item textarea {
             font-size: 0.85rem;
           }
+          .item {
+            width: 100%;
+          }
+
+          .carrusel {
+            width: 100%;
+            max-width: 100%;
+          }
+
         }
+
+
       </style>
     </head>
     <body>

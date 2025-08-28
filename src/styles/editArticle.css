@@ -120,6 +120,12 @@ button[type="submit"]:hover {
     color: white;
 }
 
+.warning-msg {
+    color: #b33;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
 
 /* Responsive padding para pantallas pequeñas */
 @media (max-width: 600px) {

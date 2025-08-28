@@ -1,46 +1,72 @@
 import { useState, useEffect } from "react";
 import '../../styles/editArticle.css'
-const ImageUploader = ({ initialImageBlob, onImageChange }) => {
+const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
 
-    const [imageBlob, setImageBlob] = useState(initialImageBlob || null);
-    const [imagePreview, setImagePreview] = useState(
-      initialImageBlob ? URL.createObjectURL(initialImageBlob) : null
+  const validInitialBlobs = Array.isArray(initialImageBlobs)
+  ? initialImageBlobs
+  : initialImageBlobs
+    ? [initialImageBlobs]
+    : [];
+
+    const [imageBlobs, setImageBlobs] = useState(validInitialBlobs);
+    const [imagePreviews, setImagePreviews] = useState(
+      validInitialBlobs.map(blob => URL.createObjectURL(blob))
     );
+    const MAX_IMAGES = 3;
+    const [warning, setWarning] = useState('');
 
     const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const previewUrl = URL.createObjectURL(file);
-          setImagePreview(previewUrl);
-          setImageBlob(file);
-          onImageChange(file); // comunica el cambio al componente padre
-        }
+      const files = Array.from(e.target.files);
+      const newBlobs = files.filter(file => file.type.startsWith('image/'));
+
+      const combinedBlobs = [...imageBlobs, ...newBlobs];
+
+      if (combinedBlobs.length > MAX_IMAGES) {
+        setWarning(`⚠️ Máximo de ${MAX_IMAGES} imágenes alcanzado`);
+        const limitedBlobs = combinedBlobs.slice(0, MAX_IMAGES);
+        const limitedPreviews = limitedBlobs.map(blob => URL.createObjectURL(blob));
+
+        imagePreviews.forEach(url => URL.revokeObjectURL(url));
+
+        setImageBlobs(limitedBlobs);
+        setImagePreviews(limitedPreviews);
+        onImageChange(limitedBlobs);
+      } else {
+        setWarning('');
+        const newPreviews = newBlobs.map(blob => URL.createObjectURL(blob));
+        setImageBlobs(combinedBlobs);
+        setImagePreviews([...imagePreviews, ...newPreviews]);
+        onImageChange(combinedBlobs);
+      }
+    };
+
+
+    useEffect(() => {
+      return () => {
+        imagePreviews.forEach(url => URL.revokeObjectURL(url));
       };
+    }, [imagePreviews]);
 
-      useEffect(() => {
-        return () => {
-          if (imagePreview) {
-            URL.revokeObjectURL(imagePreview);
-          }
-        };
-      }, [imagePreview]);
+    useEffect(() => {
+      const validBlobs = Array.isArray(initialImageBlobs)
+        ? initialImageBlobs
+        : initialImageBlobs
+          ? [initialImageBlobs]
+          : [];
 
-      useEffect(() => {
-        if (initialImageBlob) {
-          const previewUrl = URL.createObjectURL(initialImageBlob);
-          setImagePreview(previewUrl);
-        }
-      }, [initialImageBlob]);
+      const previews = validBlobs.map(blob => URL.createObjectURL(blob));
+      setImageBlobs(validBlobs);
+      setImagePreviews(previews);
+    }, [initialImageBlobs]);
   return (
     <div className="edit-select-img">
-    <input type="file" accept="image/*" onChange={handleImageUpload} />
-    {imagePreview && (
-      <img
-        src={imagePreview}
-        alt="Vista previa"
-        className="edit-img"
-      />
-    )}
+    <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
+    {warning && <p className="warning-msg">{warning}</p>}
+    <div className="preview-gallery">
+      {imagePreviews.map((url, index) => (
+        <img key={index} src={url} alt={`Vista previa ${index + 1}`} className="edit-img" />
+      ))}
+    </div>
   </div>
   )
 }

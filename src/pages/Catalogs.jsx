@@ -40,6 +40,8 @@ const Catalogs = () => {
     }, []);
 
 
+
+
     const filteredArticles = selectedCategory === 'Todos'
     ? articles
     : articles.filter(item => Array.isArray(item.tags) && item.tags.includes(selectedCategory));
@@ -153,8 +155,10 @@ const Catalogs = () => {
 
           ))}
           </select>
-
+          <label htmlFor='category-bulk' className='sr-only'>Seleccion</label>
           <select
+          name="category-bulk"
+          id="category-bulk"
           value={selectedCatalog.bulk || ''}
           onChange={(e) => setSelectedCatalog(prev => ({ ...prev, bulk: e.target.value}))}
           >
@@ -187,10 +191,17 @@ const Catalogs = () => {
         </div>
         <div className="gallery">
   {filteredArticles.map((item) => {
-    const blobs = item.imageBlobs || (item.imageBlob ? [item.imageBlob] : []);
+    const blobs = Array.isArray(item.imageBlobs)
+    ? item.imageBlobs
+    : item.imageBlob instanceof Blob
+      ? [item.imageBlob]
+      : [];
+
+      const validBlobs = blobs.filter(blob => blob instanceof Blob);
+
     if (blobs.length > 0) {
       try {
-        const imageUrls = blobs.map(blob => URL.createObjectURL(blob));
+        const imageUrls = validBlobs.map(blob => URL.createObjectURL(blob));
         return (
           <div key={item.id} className={`card ${
             selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id)

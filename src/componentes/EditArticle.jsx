@@ -4,11 +4,17 @@ import ImageUploader from './shared/ImageUploader';
 import '../styles/editArticle.css'
 
 const EditArticle = ({ article, onSave }) => {
-const [title, setTitle] = useState(article.title);
-const [description, setDescription] = useState(article.description);
-const [privateDescription, setPrivateDescription] = useState(article.privateDescription);
+const [title, setTitle] = useState(article.title || '');
+const [description, setDescription] = useState(article.description || '');
+const [privateDescription, setPrivateDescription] = useState(article.privateDescription || '');
 const [tags, setTags] = useState(article.tags || []);
-const [imageBlob, setImageBlob] = useState(article.imageBlob || null);
+const [imageBlobs, setImageBlobs] = useState(
+  Array.isArray(article.imageBlobs)
+    ? article.imageBlobs
+    : article.imageBlob
+      ? [article.imageBlob]
+      : []
+);
 const [availableTags, setAvailableTags] = useState([]);
 const [newTag, setNewTag] = useState('');
 
@@ -28,7 +34,7 @@ title,
 description,
 privateDescription,
 tags,
-imageBlob
+imageBlobs
 });
 onSave(); // para recargar la lista
 };
@@ -66,10 +72,9 @@ return (
 }}
 >
 <div className="title-description">
-  <ImageUploader initialImageBlob={imageBlob} onImageChange={(blob)=> setImageBlob(blob)}
+  <ImageUploader initialImageBlobs={imageBlobs} onImageChange={(blobs)=> setImageBlobs(blobs)}
     />
 
-      <label htmlFor='title'>Title</label>
       <input value={title} onChange={(e) => setTitle(e.target.value)} name='title' id='title'/>
 
       <textarea value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
