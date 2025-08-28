@@ -187,15 +187,16 @@ const Catalogs = () => {
         </div>
         <div className="gallery">
   {filteredArticles.map((item) => {
-    if (item.imageBlob) {
+    const blobs = item.imageBlobs || (item.imageBlob ? [item.imageBlob] : []);
+    if (blobs.length > 0) {
       try {
-        const imageUrl = URL.createObjectURL(item.imageBlob);
+        const imageUrls = blobs.map(blob => URL.createObjectURL(blob));
         return (
           <div key={item.id} className={`card ${
             selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id)
               ? 'en-catalogo'
               : ''
-         }`}>
+          }`}>
 
             <input
             type='checkbox'
@@ -206,11 +207,11 @@ const Catalogs = () => {
              />
              <p>Articulo <span>{item.id}</span></p>
            <p className='titulo-articulo'>{item.title}</p>
-            <img
-              src={imageUrl}
-              alt="Artículo"
-              style={{ width: '150px' }}
-            />
+           <div className="image-gallery">
+              {imageUrls.map((url, index) => (
+                <img key={index} src={url} alt={`Imagen ${index + 1}`} style={{ width: '100px' }} />
+              ))}
+            </div>
             <textarea value={item.description} readOnly />
             <textarea value={item.privateDescription} readOnly />
             <div className='edit-buttons'>
@@ -226,14 +227,12 @@ const Catalogs = () => {
               Eliminar
               </button>
             )}
-
-
             </div>
 
           </div>
         );
       } catch (error) {
-        console.error('❌ Error al crear URL de imagen:', error);
+        console.error('❌ Error al crear URLs de imagen:', error);
       }
     } else {
       console.warn('⚠️ Artículo sin imagen:', item.description);

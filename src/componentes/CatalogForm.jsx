@@ -10,32 +10,30 @@ const CatalogForm = () => {
   const [description, setDescription] = useState('');
   const [privateDescription, setPrivateDescription] = useState('');
   const [title, setTitle] = useState('');
-  const [imageBlob, setImageBlob] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imageBlobs, setImageBlobs] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
 
 
   const handleImageUpload = (e) => {
-    const archivo = e.target.files[0];
-    if (archivo) {
-      const imageUrl = URL.createObjectURL(archivo);
-      console.log('📸 Imagen subida:', archivo);
-      console.log('🔗 URL de vista previa:', imageUrl);
-      setImagePreview(imageUrl);
-      setImageBlob(archivo); // guardamos el archivo como Blob
+    try {
+      const nuevosArchivos = Array.from(e.target.files).slice(0, 3 - imageBlobs.length);
+      const nuevasPreviews = nuevosArchivos.map(file => URL.createObjectURL(file));
+
+      setImageBlobs(prev => [...prev, ...nuevosArchivos]);
+      setImagePreviews(prev => [...prev, ...nuevasPreviews]);
+    } catch (error) {
+      console.error('❌ Error al subir imágenes:', error);
+      alert('Hubo un problema al cargar las imágenes.');
     }
   };
 
-
-
-
   useEffect(() => {
     return () => {
-      if (imagePreview) {
-        URL.revokeObjectURL(imagePreview);
-      }
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
     };
-  }, [imagePreview]);
+  }, [imagePreviews]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +42,7 @@ const CatalogForm = () => {
       title,
       description,
       privateDescription,
-      imageBlob, // guardamos el Blob
+      imageBlobs: [blob1, blob2, blob3]
     };
     try {
       await saveArticle(newArticle);
@@ -67,15 +65,17 @@ const CatalogForm = () => {
       <section className='select-file'>
 
 
-    <div className="image-preview-container">
-      {imagePreview ? (
-        <img src={imagePreview} alt='Vista previa' />
-      ) : (
-        <div className="image-placeholder">
-          Sube una imagen
-        </div>
-      )}
-    </div>
+      <div className="image-preview-container">
+  {imagePreviews.length > 0 ? (
+    imagePreviews.map((url, index) => (
+      <img key={index} src={url} alt={`Vista previa ${index + 1}`} />
+    ))
+  ) : (
+    <div className="image-placeholder">Sube hasta 3 imágenes</div>
+  )}
+</div>
+
+
     <div className='buttons-form'>
     <input
   type="file"

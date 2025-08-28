@@ -28,10 +28,42 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.carrusel-preview {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+}
 
+.carrusel-imagenes {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
 
-.export-catalog div img {
-    border-radius: 5px;
+.carrusel-imagenes img {
+    width: 100%;
+    flex: 0 0 100%;
+    border-radius: 6px;
+}
+
+.carrusel-botones {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 10px;
+}
+
+.carrusel-botones button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .export-card-preview textarea {

@@ -61,7 +61,10 @@ const CreateCatalog = () => {
                     key={article.id}
                     className="card-preview">
                         <h3>{article.id}</h3>
-                        <img src={URL.createObjectURL(article.imageBlob)} alt={article.description}/>
+                        {(article.imageBlobs || [article.imageBlob]).map((blob, index) => (
+  <img key={index} src={URL.createObjectURL(blob)} alt={`Imagen ${index + 1}`} />
+))}
+
                         <textarea>{article.description}</textarea>
                     </div>
                 ))}
