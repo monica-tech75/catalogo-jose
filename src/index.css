@@ -4,7 +4,7 @@
   --color-gris-humo: #E5E5E5;
   --color-blanco-hueso: #F9F7F4;
   --color-verde-olivo: #6B8E23;
-  --color-dorado-suave: #C9A86A;
+  --color-dorado-suave: rgb(201, 168, 106);
   --color-madera-oscuro: rgba(150, 82, 19, 0.956);
 }
 

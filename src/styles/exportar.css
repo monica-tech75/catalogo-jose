@@ -29,6 +29,8 @@
 }
 
 .carrusel-preview {
+    display: flex;
+    justify-content: center;
     position: relative;
     width: 100%;
     max-width: 100%;
@@ -37,19 +39,49 @@
 
 .carrusel-imagenes {
     display: flex;
+    margin: 0 auto;
     transition: transform 0.5s ease-in-out;
-    touch-action: pan-x;
-    scroll-snap-type: x mandatory;
-    overflow-x: auto;
-    scroll-behavior: smooth;
+    width: 100%;
+    gap: 10px;
 }
 
+
 .carrusel-imagenes img {
+    flex: 0 0 auto;
     width: 100%;
-    flex: 0 0 100%;
+    height: auto;
+    object-fit: cover;
     border-radius: 6px;
-    scroll-snap-align: start;
 }
+
+.carrusel-indicadores {
+    display: flex;
+    justify-content: center;
+    /* ✅ centra horizontalmente */
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    z-index: 2;
+}
+
+.punto {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    background-color: var(--color-dorado-suave);
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.punto.activo {
+    background-color: var(--color-madera-oscuro);
+}
+
 
 .carrusel-botones {
     position: absolute;
@@ -127,6 +159,7 @@
 @media (max-width: 600px) {
     .export-catalog {
         grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
         gap: 30px;
     }
 

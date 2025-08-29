@@ -77,8 +77,16 @@ return (
 
       <input value={title} onChange={(e) => setTitle(e.target.value)} name='title' id='title'/>
 
-      <textarea value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
-      <textarea value={privateDescription} onChange={(e)=> setPrivateDescription(e.target.value)}></textarea>
+      <textarea
+      name='descripcion'
+      value={description}
+      onChange={(e)=> setDescription(e.target.value)}
+      ></textarea>
+
+      <textarea
+      name='descripcion-privada'
+      value={privateDescription}
+      onChange={(e)=> setPrivateDescription(e.target.value)}></textarea>
       </div>
 
       <section className='tag-list'>

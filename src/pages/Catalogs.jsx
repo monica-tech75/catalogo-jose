@@ -179,6 +179,7 @@ const Catalogs = () => {
 
           <div className='crear-catalogo'>
             <input
+            name='nombre'
             type='text'
             value={newCatalogName}
             placeholder='Nombre'
@@ -210,6 +211,7 @@ const Catalogs = () => {
           }`}>
 
             <input
+            name='checkbox-cat'
             type='checkbox'
             disabled={selectedCatalog.bulk && isArticleInCatalog(selectedCatalog.bulk, item.id)}
             checked={selectedArticles.includes(item.id)}
@@ -223,8 +225,14 @@ const Catalogs = () => {
                 <img key={index} src={url} alt={`Imagen ${index + 1}`} style={{ width: '100px' }} />
               ))}
             </div>
-            <textarea value={item.description} readOnly />
-            <textarea value={item.privateDescription} readOnly />
+            <textarea
+             value={item.description}
+             name='item-description'
+             readOnly />
+            <textarea
+            value={item.privateDescription}
+            name='private-description'
+            readOnly />
             <div className='edit-buttons'>
               <button
               onClick={() => navigate(`/editar/${item.id}`)}

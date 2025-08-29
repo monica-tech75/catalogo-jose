@@ -65,7 +65,8 @@ const CreateCatalog = () => {
   <img key={index} src={URL.createObjectURL(blob)} alt={`Imagen ${index + 1}`} />
 ))}
 
-                        <textarea>{article.description}</textarea>
+                        <textarea name="descripcion" value={article.description} readOnly/>
+                        <textarea name="descripcion-privada" value={article.privateDescription} readOnly/>
                     </div>
                 ))}
                 </div>

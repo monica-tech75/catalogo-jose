@@ -204,18 +204,33 @@ const generarHTMLCatalogo = async () => {
     }
     const carruselIndices = {};
 
-    const moverCarrusel = (id, direccion) => {
+    function moverCarrusel(id, direccion, esClick = false) {
       const carrusel = document.querySelector(`#carrusel-${id} .carrusel-imagenes`);
-      if (!carrusel) return;
+      const puntos = document.querySelectorAll(`#indicadores-${id} .punto`);
+      if (!carrusel || puntos.length === 0) return;
 
       const total = carrusel.children.length;
-      carruselIndices[id] = (carruselIndices[id] || 0) + direccion;
 
-      if (carruselIndices[id] < 0) carruselIndices[id] = total - 1;
-      if (carruselIndices[id] >= total) carruselIndices[id] = 0;
+      if (esClick) {
+        carruselIndices[id] = direccion;
+      } else {
+        carruselIndices[id] = (carruselIndices[id] || 0) + direccion;
+        if (carruselIndices[id] < 0) carruselIndices[id] = total - 1;
+        if (carruselIndices[id] >= total) carruselIndices[id] = 0;
+      }
 
       carrusel.style.transform = `translateX(-${carruselIndices[id] * 100}%)`;
-    };
+
+      puntos.forEach((punto, index) => {
+        punto.classList.toggle('activo', index === carruselIndices[id]);
+      });
+    }
+    setTimeout(() => {
+      document.querySelectorAll('.carrusel-indicadores').forEach(indicador => {
+        const puntos = indicador.querySelectorAll('.punto');
+        if (puntos.length > 0) puntos[0].classList.add('activo');
+      });
+    }, 0);
 
 
   return (
@@ -235,7 +250,21 @@ const generarHTMLCatalogo = async () => {
     {(article.imageBlobs || [article.imageBlob]).map((blob, index) => (
       <img key={index} src={URL.createObjectURL(blob)} alt={`Imagen ${index + 1}`} />
     ))}
+
   </div>
+  <div className="carrusel-indicadores" id={`indicadores-${article.id}`}>
+  {(article.imageBlobs || [article.imageBlob]).map((_, index) => (
+    <span
+    key={index}
+    className="punto"
+    data-index={index}
+    onClick={() => moverCarrusel(article.id, index, true)}
+    />
+  ))}
+</div>
+
+
+
   {(article.imageBlobs?.length || 0) > 1 && (
     <div className="carrusel-botones">
       <button onClick={() => moverCarrusel(article.id, -1)}>⬅️</button>
@@ -243,7 +272,7 @@ const generarHTMLCatalogo = async () => {
     </div>
   )}
 </div>
-                <textarea defaultValue={article.description} readOnly />
+                <textarea name="descripcion-articulo" defaultValue={article.description} readOnly />
 
             </div>
         ))}
