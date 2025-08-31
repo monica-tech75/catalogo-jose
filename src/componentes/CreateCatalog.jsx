@@ -34,10 +34,15 @@ const CreateCatalog = () => {
     }
 
   return (
-    <>
-    <Link to="/"><button>🏠 Inicio</button></Link>
 
     <div className="catalogs-wrapper">
+        <nav className="navbar catalogo-disponible">
+        <Link to="/"><button>🏠 Inicio</button></Link>
+    <button onClick={() => navigateToCatalog(selectedCatalog)}>
+            📤 Ir a exportar catálogo
+        </button>
+        </nav>
+
         <h2>Catalogos Disponibles</h2>
         <ul className="catalogos-lista">
             {
@@ -45,12 +50,12 @@ const CreateCatalog = () => {
                     <li
                     key={cat.id}
                     onClick={() => handleSelectedCatalog(cat)}
-                    ><strong>{cat.name} (ID: {cat.id})</strong></li>
+                    >{cat.name} (ID: {cat.id})</li>
 
                 ))
             }
         </ul>
-    </div>
+
 
         {selectedCatalog && (
             <div className="container-preview">
@@ -73,13 +78,7 @@ const CreateCatalog = () => {
             </div>
         )}
 
-
-        <button onClick={() => navigateToCatalog(selectedCatalog)}>
-            📤 Ir a exportar catálogo
-        </button>
-
-
-    </>
+        </div>
 
   )
 }

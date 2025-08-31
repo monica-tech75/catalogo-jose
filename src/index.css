@@ -1,11 +1,12 @@
 :root {
-  --color-negro-carbon: #1C1C1C;
-  --color-madera-calida: #A47551;
-  --color-gris-humo: #E5E5E5;
-  --color-blanco-hueso: #F9F7F4;
-  --color-verde-olivo: #6B8E23;
-  --color-dorado-suave: rgb(201, 168, 106);
-  --color-madera-oscuro: rgba(150, 82, 19, 0.956);
+  --color-blanco-hueso: #fdfdf6;
+  --color-madera-oscuro: #816140;
+  --color-verde-olivo: #7a9e76;
+  --color-dorado-suave: #f9f2e7;
+  --color-azul-acento: #0077cc;
+  --color-azul-hover: #005fa3;
+  --color-verde-exito: #4caf50;
+  --color-rojo-alerta: #f05c52;
 }
 
 *,
@@ -40,5 +41,28 @@ h4 {
 }
 
 button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+input[type="text"],
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-madera-oscuro);
+  border-radius: 6px;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
 }

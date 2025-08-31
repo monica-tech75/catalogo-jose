@@ -40,6 +40,28 @@ const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
       }
     };
 
+    const handleReplaceImage = (e, indexToReplace) => {
+      const file = e.target.files[0];
+      if (!file || !file.type.startsWith('image/')) return;
+
+      const newBlob = file;
+      const newPreview = URL.createObjectURL(newBlob);
+
+      // Limpia la URL anterior
+      URL.revokeObjectURL(imagePreviews[indexToReplace]);
+
+      const updatedBlobs = [...imageBlobs];
+      const updatedPreviews = [...imagePreviews];
+
+      updatedBlobs[indexToReplace] = newBlob;
+      updatedPreviews[indexToReplace] = newPreview;
+
+      setImageBlobs(updatedBlobs);
+      setImagePreviews(updatedPreviews);
+      onImageChange(updatedBlobs);
+    };
+
+
 
     useEffect(() => {
       return () => {
@@ -63,10 +85,19 @@ const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
     <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
     {warning && <p className="warning-msg">{warning}</p>}
     <div className="preview-gallery">
-      {imagePreviews.map((url, index) => (
-        <img key={index} src={url} alt={`Vista previa ${index + 1}`} className="edit-img" />
-      ))}
+  {imagePreviews.map((url, index) => (
+    <div key={index} className="preview-item">
+      <img src={url} alt={`Vista previa ${index + 1}`} className="edit-img" />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => handleReplaceImage(e, index)}
+        className="replace-input"
+      />
     </div>
+  ))}
+</div>
+
   </div>
   )
 }

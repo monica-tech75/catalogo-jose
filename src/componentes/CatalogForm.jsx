@@ -42,7 +42,7 @@ const CatalogForm = () => {
       title,
       description,
       privateDescription,
-      imageBlobs: [blob1, blob2, blob3]
+      imageBlobs
     };
     try {
       await saveArticle(newArticle);

@@ -1,8 +1,16 @@
 .catalogs-wrapper {
     width: 100%;
-    min-height: 200px;
-    background-color: bisque;
+    background-color: var(--color-madera-oscuro);
     text-align: center;
+}
+
+.navbar.catalogo-disponible {
+    display: flex;
+    justify-content: space-between;
+}
+
+.catalogs-wrapper h2 {
+    color: var(--color-dorado-suave);
 }
 
 .catalogs-wrapper ul {
@@ -11,18 +19,20 @@
     gap: 10px;
     width: 90%;
     margin: 0 auto;
-    display: flex;
     background-color: var(--color-blanco-hueso);
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
 
 .catalogs-wrapper ul li {
-    padding: 0.2rem 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: var(--color-blanco-hueso);
-}
-
-.catalogs-wrapper ul li:nth-child(odd) {
-    background-color: var(--color-madera-calida);
+    background-color: var(--color-madera-oscuro);
 }
 
 .catalogs-wrapper ul li:nth-child(even) {
@@ -30,24 +40,27 @@
 }
 
 .container-preview {
+    text-align: center;
     margin-top: 2rem;
-    padding: 3rem;
-    background-color: #fdfdfd;
-    border-radius: 8px;
+    padding-inline: 3rem;
+    background-color: var(--color-madera-oscuro);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 
 .container-preview h3 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
-    color: var(--color-madera-oscuro);
+    color: var(--color-dorado-suave);
+    font-weight: 600;
 }
 
 
 .preview-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
 
 }
 
@@ -55,28 +68,27 @@
     background-color: var(--color-dorado-suave);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.card-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
 .card-preview img {
     width: 100%;
-    max-height: fit-content;
+    height: auto;
     object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .card-preview textarea {
-    width: 100%;
     resize: none;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    background-color: #fff;
-    box-sizing: border-box;
+    margin-bottom: 16px;
 }

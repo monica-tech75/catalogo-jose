@@ -15,6 +15,7 @@
 .catalogs-container .dropdown-container {
     display: flex;
     flex-wrap: wrap;
+    margin-inline: 1rem;
     gap: 1rem;
     justify-content: center;
     align-items: center;
@@ -98,7 +99,7 @@
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
     padding: 10px;
 }
@@ -120,16 +121,27 @@
     position: relative;
 }
 
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card textarea {
+    border-radius: 6px;
+    padding-inline: 10px;
+    border: none;
+}
+
 .card.en-catalogo {
     border: 2px solid #4caf50;
     background-color: #e8f5e9;
 }
 
 .card.en-catalogo textarea {
-    width: 100%;
-    max-width: 100%;
-    background-color: #f0fff0;
-    font-weight: bold;
+    background-color: var(--color-blanco-hueso);
+    color: rgb(43, 43, 43);
+    font-weight: 500;
+    border: 2px solid #4caf50;
 }
 
 .card.en-catalogo::after {
@@ -168,42 +180,56 @@
 
 .card p {
     font-size: 0.95rem;
-    color: #555;
-    margin: 5px 0;
+    color: var(--color-madera-oscuro);
+    font-weight: 500;
+    align-self: flex-start;
 }
 
-.card h3 {
-    color: #4A90E2;
-    font-size: 1.1rem;
-    margin-top: 10px;
-}
 
 .card textarea {
     width: 100%;
     max-width: 100%;
 }
 
+.card .titulo-articulo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: var(--color-madera-oscuro);
+    color: var(--color-blanco-hueso);
+    border-radius: 6px;
+    padding: 5px 20px;
+}
+
 .card.en-catalogo button {
     margin: 10px;
 }
 
-.btn-quitar {
-    background-color: #f44336;
-    color: white;
+.edit-buttons button {
     border: none;
     padding: 4px 8px;
-    margin-top: 4px;
+    color: var(--color-blanco-hueso);
     cursor: pointer;
-    font-size: 0.8rem;
     border-radius: 4px;
 }
 
+.btn-editar {
+    background-color: #5aae5c;
+}
+
+.btn-quitar {
+    background-color: #f05c52;
+    margin-top: 4px;
+
+}
+
 .success-message {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #e6f4ea;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+    font-size: 0.9rem;
     padding: 10px;
     margin-top: 10px;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
 

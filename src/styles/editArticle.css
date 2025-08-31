@@ -126,6 +126,18 @@ button[type="submit"]:hover {
     margin-top: 0.5rem;
 }
 
+.preview-item {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.replace-input {
+    margin-top: 8px;
+    font-size: 0.8rem;
+}
+
+
 
 /* Responsive padding para pantallas pequeñas */
 @media (max-width: 600px) {
