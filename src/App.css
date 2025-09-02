@@ -17,20 +17,7 @@ li {
 
 /*  Header y Navbar */
 
-header img.logo-header {
-  width: 100px;
-  background-color: var(--color-blanco-hueso);
-  margin-left: 20px;
-}
 
-header {
-  background-color: var(--color-blanco-hueso);
-  color: var(--color-negro-carbon);
-  padding: 20px;
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-}
 
 .navbar-center ul {
   display: flex;

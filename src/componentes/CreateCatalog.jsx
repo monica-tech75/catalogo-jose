@@ -37,7 +37,6 @@ const CreateCatalog = () => {
 
     <div className="catalogs-wrapper">
         <nav className="navbar catalogo-disponible">
-        <Link to="/"><button>🏠 Inicio</button></Link>
     <button onClick={() => navigateToCatalog(selectedCatalog)}>
             📤 Ir a exportar catálogo
         </button>

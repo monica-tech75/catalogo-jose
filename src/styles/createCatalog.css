@@ -6,7 +6,7 @@
 
 .navbar.catalogo-disponible {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .catalogs-wrapper h2 {

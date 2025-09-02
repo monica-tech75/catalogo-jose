@@ -86,7 +86,8 @@ const CatalogForm = () => {
  <button type='submit'>Guardar Articulo</button>
     </div>
       </section>
-      <label htmlFor='title'>Titulo</label>
+
+      <label htmlFor='title' className='sr-only'>Titulo</label>
       <input
       name='title'
       id='title'
@@ -94,7 +95,10 @@ const CatalogForm = () => {
       value={title}
       onChange={(e) => setTitle(e.target.value)}
       />
-      <label htmlFor='description'>Descripcion</label>
+      <label
+      htmlFor='description'
+      className='sr-only'
+      >Descripcion</label>
       <textarea
       id='description'
       placeholder='Descripcion Completa'
@@ -103,7 +107,10 @@ const CatalogForm = () => {
       rows={2}
       >
       </textarea>
-      <label htmlFor='privado'>Anotacion Privada</label>
+      <label
+      htmlFor='privado'
+      className='sr-only'
+      >Anotacion Privada</label>
       <textarea
       id='privado'
       placeholder='Anotaciones privadas'
@@ -113,16 +120,11 @@ const CatalogForm = () => {
       >
       </textarea>
 
-
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
       <Link to='/modificar'>Catalog</Link>
 
-
     </form>
-
-
-
 
     </>
 
