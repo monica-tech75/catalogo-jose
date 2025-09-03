@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addArticleToCatalog, createCatalog, getAllArticles, getAllTags, removeArticleFromCatalog } from '../services/dbService';
-import { Link } from 'react-router-dom'
 import '../styles/catalog.css'
 import { getAllCatalogs } from '../services/dbService';
-import { FaAngleDoubleLeft } from "react-icons/fa";
+
 
 const Catalogs = () => {
     const navigate = useNavigate();
@@ -133,12 +132,6 @@ const Catalogs = () => {
   return (
     <>
     <div className='catalogs-container'>
-      <section className='nav-crear'>
-    <FaAngleDoubleLeft />
-      <h3><Link to="/">Inicio</Link></h3>
-      <h3><Link to="/crearCatalogo">Crear</Link></h3>
-      </section>
-
         {/* Dropdown de categorias */}
         <div className="dropdown-container">
           <label htmlFor="category-select"

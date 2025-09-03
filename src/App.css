@@ -14,20 +14,3 @@ img {
 li {
   list-style: none;
 }
-
-/*  Header y Navbar */
-
-
-
-.navbar-center ul {
-  display: flex;
-  justify-content: space-evenly;
-
-}
-
-.navbar-center ul li {
-  background-color: bisque;
-  color: #1b1b1b;
-  padding: 10px 20px;
-  border-radius: 5px;
-}

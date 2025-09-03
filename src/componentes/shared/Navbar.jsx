@@ -13,9 +13,9 @@ const Navbar = () => {
 
       <ul>
         <li><Link to="/"><FcHome /> Inicio</Link></li>
-        <li><Link to="/crearArticulo"><FcEditImage /> Añadir artículo</Link></li>
+        <li><Link to="/crearArticulo"><FcEditImage /> + artículo</Link></li>
         <li><Link to="/modificar"><FcGallery /> Modificar</Link></li>
-        <li><Link to="/crearCatalogo"><FcClapperboard /> Crear Catalogo</Link></li>
+        <li><Link to="/crearCatalogo"><FcClapperboard /> Crear</Link></li>
 
       </ul>
     </nav>
