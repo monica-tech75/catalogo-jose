@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import '../../styles/editArticle.css'
+import '../../styles/editArticle.css';
+import { FcGallery } from "react-icons/fc";
+
 const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
 
   const validInitialBlobs = Array.isArray(initialImageBlobs)
@@ -82,17 +84,35 @@ const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
     }, [initialImageBlobs]);
   return (
     <div className="edit-select-img">
-    <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
+      <label
+      htmlFor="upload"
+      className="custom-upload"
+      >
+        <FcGallery />  Max 3 Imagenes
+        </label>
+    <input
+    type="file"
+    id="upload"
+    className="hidden-upload"
+    accept="image/*"
+    multiple onChange={handleImageUpload} />
     {warning && <p className="warning-msg">{warning}</p>}
     <div className="preview-gallery">
   {imagePreviews.map((url, index) => (
     <div key={index} className="preview-item">
       <img src={url} alt={`Vista previa ${index + 1}`} className="edit-img" />
+      <label
+      htmlFor="upload-one"
+      className="custom-upload"
+      >
+        <FcGallery /> Seleccionar imagen
+        </label>
       <input
         type="file"
+        id="upload-one"
+        className="hidden-upload"
         accept="image/*"
         onChange={(e) => handleReplaceImage(e, index)}
-        className="replace-input"
       />
     </div>
   ))}

@@ -60,7 +60,6 @@ const CatalogForm = () => {
 
 
   return (
-    <>
     <form onSubmit={handleSubmit} className='form-articulo'>
       <section className='select-file'>
 
@@ -122,23 +121,9 @@ const CatalogForm = () => {
 
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
-      <Link to='/modificar'>Catalog</Link>
-
     </form>
-
-    </>
 
   )
 }
 
 export default CatalogForm
-
-
-// envolver en un bloque try and catch para manejo de errores
-/* try {
-  await saveArticle(newArticle);
-  setSuccessMessage('✅ Artículo guardado correctamente');
-} catch (error) {
-  console.error('Error al guardar:', error);
-  setSuccessMessage('❌ Error al guardar el artículo');
-} */

@@ -1,5 +1,6 @@
 .home-preview {
-    padding: 2rem;
+    display: grid;
+    place-content: center;
     background-color: var(--color-blanco-hueso);
     min-height: 100vh;
 }
@@ -53,10 +54,16 @@
 }
 
 @media only screen and (min-width: 600px) {
+
     .preview-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 2rem;
+        max-width: 1200px;
+        /* ✅ limita el ancho del grid */
+        margin: 0 auto;
+        /* ✅ centra el grid horizontalmente */
+        justify-content: center;
     }
 
     .intro-message h1 {

@@ -4,12 +4,12 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <>
-    <Navbar />
-    <main>
+      <Navbar />
+      <div className="layout-wrapper">
         <Outlet />
-    </main>
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default Layout

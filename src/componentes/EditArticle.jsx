@@ -115,7 +115,13 @@ return (
     })}
   </div>
       <div className='edit-tags'>
-        <input type='text' placeholder='Añadir etiqueta' value={newTag} onChange={(e)=> setNewTag(e.target.value)}
+        <input
+        id='addTag'
+        name='addTag'
+        type='text'
+         placeholder='Añadir etiqueta'
+         value={newTag}
+         onChange={(e)=> setNewTag(e.target.value)}
         />
         <button onClick={handleAddNewTag}>Añadir Etiqueta</button>
       </div>

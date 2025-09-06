@@ -23,7 +23,6 @@ const EditArticlePage = () => {
     }
     return (
         <>
-        <button onClick={handleSave}> Ir a Catalogo</button>
         {
              article ? (
                 <EditArticle article={article} onSave={handleSave}/>
