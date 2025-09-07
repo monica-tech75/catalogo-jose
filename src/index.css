@@ -1,6 +1,7 @@
 :root {
   --color-blanco-hueso: #fdfdf6;
   --color-madera-oscuro: #816140;
+  --color-madera-claro: #ba8550;
   --color-verde-olivo: #7a9e76;
   --color-dorado-suave: #f9f2e7;
   --color-azul-acento: #0077cc;
@@ -39,9 +40,12 @@ textarea {
 h1,
 h2,
 h3,
-h4 {
+h4,
+p,
+li {
   padding: 0;
   margin: 0;
+  letter-spacing: 0.07em;
 }
 
 button {

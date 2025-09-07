@@ -1,20 +1,28 @@
 import { useState, useEffect } from "react"
 import { getAllCatalogs, getArticlesByCatalog } from "../services/dbService";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../styles/createCatalog.css';
 
 const CreateCatalog = () => {
     const [message, setMessage] = useState('');
     const [catalogs, setCatalogs] = useState([]);
     const [selectedCatalog, setSelectedCatalog] = useState(null);
+    const [animateOut, setAnimateOut] = useState(false);
+
+
     const navigate = useNavigate();
 
 
 
     const handleSelectedCatalog = async (catalog) => {
-        const articles = await getArticlesByCatalog(catalog.id);
-        setSelectedCatalog({...catalog, articles})
-    }
+        setAnimateOut(true); // activa salida
+
+        setTimeout(async () => {
+          const articles = await getArticlesByCatalog(catalog.id);
+          setSelectedCatalog({ ...catalog, articles });
+          setAnimateOut(false); // activa entrada
+        }, 400); // duración de la animación de salida
+      };
 
     useEffect(() => {
         const fetchCatalogs = async () => {
@@ -36,13 +44,12 @@ const CreateCatalog = () => {
   return (
 
     <div className="catalogs-wrapper">
-        <nav className="navbar catalogo-disponible">
+        <nav className="btn-export">
+        <h1>Catalogos Disponibles</h1>
     <button onClick={() => navigateToCatalog(selectedCatalog)}>
             📤 Ir a exportar catálogo
         </button>
         </nav>
-
-        <h2>Catalogos Disponibles</h2>
         <ul className="catalogos-lista">
             {
                 catalogs.map((cat) => (
@@ -57,14 +64,17 @@ const CreateCatalog = () => {
 
 
         {selectedCatalog && (
-            <div className="container-preview">
-                <h3 className="preview-title">Articulos en "{selectedCatalog.name}"</h3>
+            <div className={`container-preview ${animateOut ? 'slide-out' : 'slide-in'}`}>
+                <h2 className="preview-title">{selectedCatalog.name.toUpperCase()}</h2>
                 <div className="preview-grid">
-                {selectedCatalog.articles.map(article => (
+                {selectedCatalog.articles.map((article, index) => (
                     <div
                     key={article.id}
-                    className="card-preview">
-                        <h3>{article.id}</h3>
+                    className="card-preview"
+                    style={{ animationDelay: `${index * 0.2}s` }}
+                    >
+                        <h3><span>Nº {article.id}</span>{article.title}</h3>
+
                         {(article.imageBlobs || [article.imageBlob]).map((blob, index) => (
   <img key={index} src={URL.createObjectURL(blob)} alt={`Imagen ${index + 1}`} />
 ))}

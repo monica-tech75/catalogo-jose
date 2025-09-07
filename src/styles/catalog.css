@@ -1,6 +1,6 @@
 /* Estilo general del contenedor */
 .catalogs-container {
-    padding: 130px 40px 0 40px;
+    padding: 150px 40px 0 40px;
     background-color: var(--color-blanco-hueso);
     min-height: 100vh;
 }
@@ -188,7 +188,7 @@
 .card .titulo-articulo {
     font-size: 1.2rem;
     font-weight: 600;
-    background-color: var(--color-madera-oscuro);
+    background-color: var(--color-madera-claro);
     color: var(--color-blanco-hueso);
     border-radius: 6px;
     padding: 5px 20px;
