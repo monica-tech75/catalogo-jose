@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { updateArticle, getAllTags, addTag } from '../services/dbService';
 import ImageUploader from './shared/ImageUploader';
-import '../styles/editArticle.css'
+import { randomColor } from '../services/randomColor';
+import '../styles/editArticle.css';
+
 
 const EditArticle = ({ article, onSave }) => {
 const [title, setTitle] = useState(article.title || '');
@@ -65,7 +67,6 @@ setAvailableTags(updatedTags.map(tag => tag.name))
 }
 
 return (
-<>
 <form className='edit-form' onSubmit={(e) => {
   e.preventDefault();
   handleSave();
@@ -103,6 +104,7 @@ return (
         }
       };
 
+
       return (
         <span
           key={tag}
@@ -132,7 +134,6 @@ return (
       <button type="submit">Guardar cambios</button>
 
     </form>
-</>
 
 );
 };

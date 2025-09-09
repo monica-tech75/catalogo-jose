@@ -84,12 +84,16 @@ const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
     }, [initialImageBlobs]);
   return (
     <div className="edit-select-img">
+      <header>
+      <h1>Editor de Articulos</h1>
       <label
       htmlFor="upload"
       className="custom-upload"
       >
         <FcGallery />  Max 3 Imagenes
         </label>
+      </header>
+
     <input
     type="file"
     id="upload"
@@ -98,24 +102,27 @@ const ImageUploader = ({ initialImageBlobs, onImageChange }) => {
     multiple onChange={handleImageUpload} />
     {warning && <p className="warning-msg">{warning}</p>}
     <div className="preview-gallery">
-  {imagePreviews.map((url, index) => (
-    <div key={index} className="preview-item">
+  {imagePreviews.map((url, index) => {
+    const inputId = `upload-${index}`;
+    return (
+      <div key={index} className="preview-item">
       <img src={url} alt={`Vista previa ${index + 1}`} className="edit-img" />
       <label
-      htmlFor="upload-one"
+      htmlFor={inputId}
       className="custom-upload"
       >
-        <FcGallery /> Seleccionar imagen
+        <FcGallery /> Cambiar
         </label>
       <input
         type="file"
-        id="upload-one"
+        id={inputId}
         className="hidden-upload"
         accept="image/*"
         onChange={(e) => handleReplaceImage(e, index)}
       />
     </div>
-  ))}
+    )
+  })}
 </div>
 
   </div>

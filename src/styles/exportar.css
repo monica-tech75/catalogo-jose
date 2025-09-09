@@ -1,31 +1,66 @@
 .export-catalog-wrapper {
-    margin-top: 1rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     text-align: center;
-    padding: 0 70px;
+    padding-top: 140px;
     background-color: var(--color-blanco-hueso);
 }
 
-.export-catalog-wrapper h2 {
-    margin-bottom: 1rem;
+.export-catalog-wrapper h1 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
     color: var(--color-madera-oscuro);
+    letter-spacing: 1px;
 }
 
 .export-catalog {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    gap: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 60px;
+    place-content: center;
 }
 
 .export-card-preview {
     background-color: var(--color-dorado-suave);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    color: var(--color-marron-oscuro);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.0.8);
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.export-card-preview p {
+    align-self: flex-start;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.export-card-preview h2 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.export-card-preview textarea {
+    width: 100%;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 1rem;
+    font-family: inherit;
+    line-height: 1.4;
 }
 
 .carrusel-preview {
@@ -47,7 +82,6 @@
 
 
 .carrusel-imagenes img {
-    flex: 0 0 auto;
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -97,8 +131,9 @@
 .carrusel-botones button {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
+    font-size: 1.5rem;
     border: none;
-    padding: 8px 12px;
+    padding: 4px 6px;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -121,13 +156,16 @@
 }
 
 .btn-wrapper-descarga button {
-    padding: 5px 10px;
-    font-weight: 600;
-    border: transparent;
-    border-radius: 5px;
+    background-color: #816140;
     color: var(--color-blanco-hueso);
-    background-color: #0077cc;
+    border: 4px solid rgba(129, 97, 64, 0.1);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(94, 69, 44, 0.1);
 }
 
 .btn-wrapper-descarga button:hover {
@@ -138,7 +176,9 @@
 }
 
 .btn-wrapper-descarga button:nth-child(1) {
-    background-color: #3399ff;
+    background-color: #FDF6E3;
+    color: #816140;
+    transition: all 0.3s ease;
 }
 
 .btn-wrapper-descarga button:nth-child(1):hover {
@@ -148,7 +188,7 @@
 
 
 .btn-wrapper-descarga button:nth-child(3) {
-    background-color: #005fa3;
+    background-color: var(--color-marron-oscuro);
 }
 
 .btn-wrapper-descarga button:nth-child(3):hover {
@@ -156,14 +196,4 @@
     color: var(--color-blanco-hueso);
 }
 
-@media (max-width: 600px) {
-    .export-catalog {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-        gap: 30px;
-    }
-
-    .carrusel-botones {
-        display: none;
-    }
-}
+@media (max-width: 600px) {}

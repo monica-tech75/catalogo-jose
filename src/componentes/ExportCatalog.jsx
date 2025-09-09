@@ -1,5 +1,6 @@
 import { exportCatalog } from "../services/dbService";
 import { useLocation } from 'react-router-dom';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import '../styles/exportar.css'
 
 const ExportCatalog = () => {
@@ -234,9 +235,13 @@ const generarHTMLCatalogo = async () => {
 
 
   return (
-    <>
      <div className="export-catalog-wrapper" id="catalog-to-export-wrapper">
-     <h2>Catalogo * {catalog.name.toUpperCase()} *</h2>
+           <div className="btn-wrapper-descarga">
+    <button onClick={handleExport}>📤 Exportar Catalogo</button>
+    <button onClick={() => window.print()}>🖨️ Imprimir catálogo</button>
+    <button onClick={handleExportHTML}>📄 Descargar como HTML</button>
+    </div>
+     <h1>{catalog.name.toUpperCase()}</h1>
         <div className="export-catalog" id="catalog-to-export">
 
         {catalog.articles.map(article => (
@@ -244,7 +249,8 @@ const generarHTMLCatalogo = async () => {
             key={article.id}
             className="export-card-preview"
             >
-                <p><span>Articulo {article.id } - </span></p>
+                <p>Articulo {article.id}</p>
+                <h2>{article.title}</h2>
                 <div className="carrusel-preview" id={`carrusel-${article.id}`}>
   <div className="carrusel-imagenes">
     {(article.imageBlobs || [article.imageBlob]).map((blob, index) => (
@@ -267,8 +273,8 @@ const generarHTMLCatalogo = async () => {
 
   {(article.imageBlobs?.length || 0) > 1 && (
     <div className="carrusel-botones">
-      <button onClick={() => moverCarrusel(article.id, -1)}>⬅️</button>
-      <button onClick={() => moverCarrusel(article.id, 1)}>➡️</button>
+      <button onClick={() => moverCarrusel(article.id, -1)}><FaAngleLeft /></button>
+      <button onClick={() => moverCarrusel(article.id, 1)}><FaAngleRight /></button>
     </div>
   )}
 </div>
@@ -277,15 +283,8 @@ const generarHTMLCatalogo = async () => {
             </div>
         ))}
         </div>
-        <div className="btn-wrapper-descarga">
-    <button onClick={handleExport}>📤 Exportar Catalogo</button>
-    <button onClick={() => window.print()}>🖨️ Imprimir catálogo</button>
-    <button onClick={handleExportHTML}>📄 Descargar como HTML</button>
-    </div>
 
     </div>
-
-    </>
 
   )
 }

@@ -1,5 +1,5 @@
 .form-articulo {
-    min-height: 100vh;
+    padding-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,7 +8,7 @@
 }
 
 form .select-file {
-    width: 60%;
+    width: 80%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -16,6 +16,7 @@ form .select-file {
 }
 
 form .buttons-form {
+    width: 30%;
     display: flex;
     flex-direction: column;
 }
@@ -26,6 +27,7 @@ form .buttons-form {
 }
 
 .form-articulo input[type="file"]::file-selector-button {
+    width: 100%;
     font-size: 1rem;
     /* mantiene visible el botón */
     padding: 8px 12px;
@@ -38,14 +40,16 @@ form .buttons-form {
 
 form .image-preview-container {
     width: 100%;
-    max-width: 300px;
-    height: 200px;
+    max-width: fit-content;
+    height: auto;
+    padding: 8px 16px;
     border-radius: 8px;
     background-color: #f0f0f0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
     margin-bottom: 1rem;
     overflow: hidden;
 }
