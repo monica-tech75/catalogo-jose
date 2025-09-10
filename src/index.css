@@ -10,7 +10,7 @@
   --color-azul-hover: #005fa3;
   --color-verde-exito: #4caf50;
   --color-rojo-alerta: #f05c52;
-  --navbar-height: 120px;
+  --navbar-height: 160px;
 }
 
 *,
@@ -52,19 +52,6 @@ p {
   letter-spacing: 1.5px;
 }
 
-button {
-  font-size: 0.95rem;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.03);
-}
-
 input[type="text"],
 select,
 textarea {
@@ -94,5 +81,11 @@ textarea {
 .layout-wrapper {
   padding-top: var(--navbar-height);
   height: 100vh;
-  background-color: #f9f9f9;
+  background-color: var(--color-blanco-hueso);
+}
+
+@media screen and (max-width: 600px) {
+  .layout-wrapper {
+    padding-top: 20px;
+  }
 }

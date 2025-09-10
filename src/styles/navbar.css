@@ -5,7 +5,7 @@
     width: 100%;
     background-color: var(--color-madera-oscuro);
     color: var(--color-blanco-hueso);
-    padding: 1rem 4rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,10 +18,10 @@
 }
 
 .navbar ul {
-    list-style: none;
     display: flex;
-    gap: 1rem;
+    justify-content: center;
     padding-block: 1rem;
+    gap: 10px;
 }
 
 .navbar a {
@@ -46,11 +46,22 @@
 
 @media only screen and (max-width: 600px) {
     .navbar {
+        position: static;
+    }
+
+    .navbar ul {
+        width: 100%;
+        display: flex;
         flex-direction: column;
-        gap: 10px;
+        justify-content: center;
+        gap: 1em;
     }
 
     .navbar-left img {
         display: none;
+    }
+
+    .navbar a {
+        border: none;
     }
 }

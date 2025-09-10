@@ -215,7 +215,7 @@ const Catalogs = () => {
            <h2 className='titulo-articulo'>{item.title}</h2>
            <div className="image-gallery">
               {imageUrls.map((url, index) => (
-                <img key={index} src={url} alt={`Imagen ${index + 1}`} style={{ width: '100px' }} />
+                <img key={index} src={url} alt={`Imagen ${index + 1}`} />
               ))}
             </div>
             <textarea

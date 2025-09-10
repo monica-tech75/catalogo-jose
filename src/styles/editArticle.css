@@ -8,7 +8,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 10rem;
     padding-bottom: 1.5rem;
     background-color: #fdfdfd;
     border-radius: 12px;
@@ -80,7 +79,6 @@
 
 .custom-upload,
 button[type="submit"] {
-    display: inline-block;
     background-color: #816140;
     color: #FDF6E3;
     border: 2px solid #5E452C;

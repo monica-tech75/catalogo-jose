@@ -82,7 +82,7 @@ const CatalogForm = () => {
   onChange={handleImageUpload}
   style={{ marginBottom: '1rem' }}
  />
- <button type='submit'>Guardar Articulo</button>
+
     </div>
       </section>
 
@@ -118,6 +118,8 @@ const CatalogForm = () => {
       rows={2}
       >
       </textarea>
+
+      <button type='submit'>Guardar</button>
 
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 

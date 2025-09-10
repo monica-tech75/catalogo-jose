@@ -196,4 +196,26 @@
     color: var(--color-blanco-hueso);
 }
 
-@media (max-width: 600px) {}
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #catalog-to-export,
+    #catalog-to-export * {
+        visibility: visible;
+    }
+
+    #catalog-to-export {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .dropdown-container {
+        margin-top: -140px;
+    }
+}
