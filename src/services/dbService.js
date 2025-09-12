@@ -68,6 +68,19 @@ export const deleteArticleById = async (articleId) => {
     return { success: true, message: `Artículo con ID ${articleId} eliminado correctamente.` };
 };
 
+export const deleteCatalogById = async (catalogId) => {
+    const db = await getDB();
+    const tx = db.transaction('catalogs', 'readwrite');
+    const store = tx.objectStore('catalogs');
+    const existing = await store.get(catalogId);
+    if (!existing) {
+        await tx.done;
+        return { success: false, message: `Catalogo con ID ${catalogId} no encontrado.` };
+    }
+    await store.delete(catalogId);
+    await tx.done;
+    return { success: true, message: `Catalogo con ID ${catalogId} eliminado correctamente` };
+}
 
 // Obtener articulo por id
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
-import { getAllCatalogs, getArticlesByCatalog } from "../services/dbService";
+import { getAllCatalogs, getArticlesByCatalog, deleteCatalogById } from "../services/dbService";
 import { useNavigate } from "react-router-dom";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import '../styles/createCatalog.css';
 
 const CreateCatalog = () => {
@@ -37,6 +38,18 @@ const CreateCatalog = () => {
         fetchCatalogs();
     }, []);
 
+    const handleDeleteCatalog = async (catalogId) => {
+        const confirmDelete = window.confirm(`¿Estas seguro de que quieres eliminar el catalogo con ID: ${catalogId}`);
+        if (!confirmDelete) return;
+
+        const result = await deleteCatalogById(catalogId);
+        alert(result.message);
+
+        // Actualizar la lista decatalogos
+        const updatedCatalogs = catalogs.filter(cat => cat.id !== catalogId);
+        setCatalogs(updatedCatalogs);
+    }
+
     const navigateToCatalog = (catalog) => {
         navigate('/exportar', { state: { catalog }})
     }
@@ -53,10 +66,20 @@ const CreateCatalog = () => {
         <ul className="catalogos-lista">
             {
                 catalogs.map((cat) => (
-                    <li
-                    key={cat.id}
+                    <li key={cat.id} className="catalogo-item">
+                    <button
+                    className="btn-select"
                     onClick={() => handleSelectedCatalog(cat)}
-                    >{cat.name} (ID: {cat.id})</li>
+                    >
+                        {cat.name} (ID: {cat.id})
+                    </button>
+                    <button
+                    className="btn-eliminar"
+                     onClick={() => handleDeleteCatalog(cat.id)}
+                    >
+                        <RiDeleteBin5Line  className="icon-delete"/>
+                    </button>
+                    </li>
 
                 ))
             }

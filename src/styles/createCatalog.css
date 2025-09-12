@@ -1,6 +1,5 @@
 .catalogs-wrapper {
     width: 100%;
-    padding: 150px 40px 0 40px;
     background-color: var(--color-blanco-hueso);
     text-align: center;
 }
@@ -17,7 +16,7 @@
     font-size: 1.1rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     letter-spacing: 1px;
-    text-transform: uppercase;
+    margin-bottom: 2rem;
 }
 
 .catalogs-wrapper ul {
@@ -32,18 +31,23 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-
-.catalogs-wrapper ul li {
+.catalogo-item .btn-select {
     padding: 0.4rem 0.75rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-blanco-hueso);
     background-color: var(--color-madera-claro);
+    cursor: pointer;
+    border: none;
 }
 
-.catalogs-wrapper ul li:nth-child(even) {
-    background-color: var(--color-verde-olivo);
+.btn-eliminar {
+    padding: 5px;
+    color: var(--color-rojo-alerta);
+    background-color: var(--color-blanco-hueso);
+    font-size: 1rem;
+    border: none;
 }
 
 .container-preview {
