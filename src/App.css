@@ -1,8 +1,9 @@
 #root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   width: 100vw;
   margin: 0 auto;
-  padding: 20px;
-  color: bisque;
 }
 
 img {
@@ -12,30 +13,4 @@ img {
 
 li {
   list-style: none;
-}
-
-/*  Header y Navbar */
-
-header img.logo {
-  width: 50px;
-  height: 50px;
-}
-
-header {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-}
-
-.navbar-center ul {
-  display: flex;
-  justify-content: space-evenly;
-
-}
-
-.navbar-center ul li {
-  background-color: bisque;
-  color: #1b1b1b;
-  padding: 10px 20px;
-  border-radius: 5px;
 }

@@ -1,76 +1,81 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { saveArticle } from '../services/dbService';
+import '../styles/catalogForm.css'
 
 
 const CatalogForm = () => {
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [imageBlob, setImageBlob] = useState(null); // en lugar de image
 
-  const [imagePreview, setImagePreview] = useState(null);
+  const navigate = useNavigate();
+  const [description, setDescription] = useState('');
+  const [privateDescription, setPrivateDescription] = useState('');
+  const [title, setTitle] = useState('');
+  const [imageBlobs, setImageBlobs] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
-  const [ selectedTags, setSelectedTags] = useState([]);
 
 
   const handleImageUpload = (e) => {
-    const archivo = e.target.files[0];
-    if (archivo) {
-      const imageUrl = URL.createObjectURL(archivo);
-      console.log('📸 Imagen subida:', archivo);
-      console.log('🔗 URL de vista previa:', imageUrl);
-      setImagePreview(imageUrl);
-      setImageBlob(archivo); // guardamos el archivo como Blob
+    try {
+      const nuevosArchivos = Array.from(e.target.files).slice(0, 3 - imageBlobs.length);
+      const nuevasPreviews = nuevosArchivos.map(file => URL.createObjectURL(file));
+
+      setImageBlobs(prev => [...prev, ...nuevosArchivos]);
+      setImagePreviews(prev => [...prev, ...nuevasPreviews]);
+    } catch (error) {
+      console.error('❌ Error al subir imágenes:', error);
+      alert('Hubo un problema al cargar las imágenes.');
     }
   };
-
-
-
 
   useEffect(() => {
     return () => {
-      if (imagePreview) {
-        URL.revokeObjectURL(imagePreview);
-      }
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
     };
-  }, [imagePreview]);
+  }, [imagePreviews]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('📝 Guardando artículo:', {
-      description,
-      price,
-      imageBlob,
-      tags: selectedTags,
-    });
+
     const newArticle = {
+      title,
       description,
-      price,
-      imageBlob, // guardamos el Blob
-      tags: selectedTags,
+      privateDescription,
+      imageBlobs
     };
-    await saveArticle(newArticle);
-    setSuccessMessage('✅ Artículo guardado correctamente');
-    setTimeout(() => setSuccessMessage(''), 3000);
+    try {
+      await saveArticle(newArticle);
+      setSuccessMessage('✅ Artículo guardado correctamente');
+
+      setTimeout(() => {
+        setSuccessMessage('');
+        navigate('/modificar')
+      }, 2000);
+    } catch (error) {
+      console.error('Error al guardar', error);
+      setSuccessMessage('❌ Error al guardar el artículo');
+    }
   };
 
 
-  const handleTagChange = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setSelectedTags([...selectedTags, value]);
-    } else {
-      setSelectedTags(selectedTags.filter(tag => tag !== value))
-    }
-  }
-
-
-
-
   return (
-    <>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form-articulo'>
+      <section className='select-file'>
 
+
+      <div className="image-preview-container">
+  {imagePreviews.length > 0 ? (
+    imagePreviews.map((url, index) => (
+      <img key={index} src={url} alt={`Vista previa ${index + 1}`} />
+    ))
+  ) : (
+    <div className="image-placeholder">Sube hasta 3 imágenes</div>
+  )}
+</div>
+
+
+    <div className='buttons-form'>
     <input
   type="file"
   accept="image/*"
@@ -78,61 +83,49 @@ const CatalogForm = () => {
   style={{ marginBottom: '1rem' }}
  />
 
-{imagePreview && (
-  <img
-    src={imagePreview}
-    alt="Vista previa"
-    style={{
-      width: '200px',
-      height: 'auto',
-      borderRadius: '8px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-    }}
-  />
-)}
+    </div>
+      </section>
 
+      <label htmlFor='title' className='sr-only'>Titulo</label>
       <input
-      type='text'
-      placeholder='descripcion'
+      name='title'
+      id='title'
+      placeholder='Titulo'
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+      />
+      <label
+      htmlFor='description'
+      className='sr-only'
+      >Descripcion</label>
+      <textarea
+      id='description'
+      placeholder='Descripcion Completa'
       value={description}
       onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-      type='number'
-      placeholder='precio'
-      value={price}
-      onChange={(e) => setPrice(e.target.value)}
-      />
-      <span>Euros</span>
-      <div>
-        <label>Etiquetas</label>
-        <div>
-          <label><input type="checkbox" value="Fiestas" onChange={handleTagChange}/>Fiestas</label>
-          <label><input type="checkbox" value="Deporte" onChange={handleTagChange}/>Deporte</label>
-          <label><input type="checkbox" value="Nombres" onChange={handleTagChange}/>Nombres</label>
-          <label><input type="checkbox" value="Puzzles" onChange={handleTagChange}/>Puzzles</label>
-          <label><input type="checkbox" value="Figuras" onChange={handleTagChange}/>Figuras</label>
-        </div>
-      </div>
-      <button type='submit'>Guardar Articulo</button>
+      rows={2}
+      >
+      </textarea>
+      <label
+      htmlFor='privado'
+      className='sr-only'
+      >Anotacion Privada</label>
+      <textarea
+      id='privado'
+      placeholder='Anotaciones privadas'
+      value={privateDescription}
+      onChange={(e) => setPrivateDescription(e.target.value)}
+      rows={2}
+      >
+      </textarea>
+
+      <button type='submit'>Guardar</button>
+
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
     </form>
-    {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-
-    <Link to='/catalogs'>Catalog</Link>
-
-    </>
 
   )
 }
 
 export default CatalogForm
-
-
-// envolver en un bloque try and catch para manejo de errores
-/* try {
-  await saveArticle(newArticle);
-  setSuccessMessage('✅ Artículo guardado correctamente');
-} catch (error) {
-  console.error('Error al guardar:', error);
-  setSuccessMessage('❌ Error al guardar el artículo');
-} */

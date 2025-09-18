@@ -1,42 +1,153 @@
 /* Estilo general del contenedor */
 .catalogs-container {
-    padding: 20px;
-    background-color: #272828;
+    background-color: var(--color-blanco-hueso);
     min-height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
 }
 
 /* Encabezados */
-.catalogs-container h2 {
-    text-align: center;
-    color: bisque;
-    margin-bottom: 20px;
+.catalogs-container .dropdown-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline: 1rem;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.dropdown-container select,
+.dropdown-container input[type="text"] {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-width: 100px;
+    background-color: #fff;
+}
+
+.añadir-limpiar button,
+.crear-catalogo button,
+.edit-buttons:first-child {
+    padding: 0.25rem 0.50rem;
+    font-size: 0.95rem;
+    background-color: var(--color-verde-olivo);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.4s ease both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.añadir-limpiar button:hover,
+.crear-catalogo button:hover,
+.card.en-catalogo button:hover {
+    background-color: var(--color-madera-oscuro);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 .catalogs-container h3 a {
     text-decoration: none;
-    color: #4a90e2;
+    color: var(--color-madera-oscuro);
     font-weight: 500;
+}
+
+.mensaje-catalogo {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-verde-olivo);
+}
+
+.añadir-limpiar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.crear-catalogo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 200px;
 }
 
 /*  Tarjeta de Articulo   */
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 60px;
+    padding-inline: 60px;
 }
 
 /* Tarjetas */
 .card {
-    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-dorado-suave);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    padding: 16px;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card textarea {
+    border-radius: 6px;
+    padding-inline: 10px;
+    border: none;
+}
+
+.card.en-catalogo {
+    border: 2px solid #4caf50;
+    background-color: #e8f5e9;
+}
+
+.card.en-catalogo textarea {
+    background-color: var(--color-blanco-hueso);
+    color: rgb(43, 43, 43);
+    font-weight: 500;
+    border: 2px solid #4caf50;
+}
+
+.card.en-catalogo::after {
+    content: "✔ Ya en catálogo";
+    color: #4caf50;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #ffffff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .card:hover {
@@ -44,22 +155,92 @@
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
+.card input[type="checkbox"] {
+    margin-right: -90%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #0077cc;
+    accent-color: #0077cc;
+}
+
 /* Image del Articulo */
-.card img {
+
+
+.image-gallery img {
     width: 100%;
+    max-width: 100%;
     height: auto;
+    object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 
 .card p {
     font-size: 0.95rem;
-    color: #555;
-    margin: 5px 0;
+    color: var(--color-madera-oscuro);
+    font-weight: 500;
+    align-self: flex-start;
 }
 
-.card h3 {
-    color: #4A90E2;
-    font-size: 1.1rem;
+
+.card textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+.card .titulo-articulo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: var(--color-madera-claro);
+    color: var(--color-blanco-hueso);
+    border-radius: 6px;
+    padding: 5px 20px;
+}
+
+.card.en-catalogo button {
+    margin: 10px;
+}
+
+.edit-buttons button {
+    border: none;
+    padding: 4px 8px;
+    color: var(--color-blanco-hueso);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-editar {
+    background-color: #5aae5c;
+}
+
+.btn-quitar {
+    background-color: #f05c52;
+    margin-top: 4px;
+
+}
+
+.success-message {
+    background-color: #e6f4ea;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+    font-size: 0.9rem;
+    padding: 10px;
     margin-top: 10px;
+    border-radius: 6px;
+}
+
+@media only screen and (max-width: 600px) {
+    .catalogs-container {
+        padding-top: 140px;
+    }
+
+    .gallery {
+        place-content: center;
+        padding-inline: 0;
+        padding-block: 1rem;
+    }
+
+    .gallery .card {
+        margin-bottom: 1rem;
+    }
 }
